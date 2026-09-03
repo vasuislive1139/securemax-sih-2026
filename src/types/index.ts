@@ -1,0 +1,351 @@
+// ============================================================
+// SecureMesh SIH26125 — Global Type Definitions
+// ============================================================
+
+export enum UserRole {
+  ADMIN = 'ADMIN',
+  MANAGER = 'MANAGER',
+  ENGINEER = 'ENGINEER',
+  AUDITOR = 'AUDITOR',
+  SECURITY_ANALYST = 'SECURITY_ANALYST',
+}
+
+export enum UserStatus {
+  ACTIVE = 'ACTIVE',
+  SUSPENDED = 'SUSPENDED',
+  REVOKED = 'REVOKED',
+}
+
+export enum ClassificationLevel {
+  PUBLIC = 'PUBLIC',
+  INTERNAL = 'INTERNAL',
+  CONFIDENTIAL = 'CONFIDENTIAL',
+  RESTRICTED = 'RESTRICTED',
+  HIGH = 'HIGH',
+}
+
+export enum AssetStatus {
+  ACTIVE = 'ACTIVE',
+  ARCHIVED = 'ARCHIVED',
+  REVOKED = 'REVOKED',
+  TRANSFERRING = 'TRANSFERRING',
+}
+
+export enum AssignmentStatus {
+  ACTIVE = 'ACTIVE',
+  REVOKED = 'REVOKED',
+  EXPIRED = 'EXPIRED',
+}
+
+export enum AccessStatus {
+  PENDING = 'PENDING',
+  AUTHORIZED = 'AUTHORIZED',
+  DENIED = 'DENIED',
+  EXPIRED = 'EXPIRED',
+  REVOKED = 'REVOKED',
+}
+
+export enum KeyStatus {
+  ACTIVE = 'ACTIVE',
+  ROTATING = 'ROTATING',
+  ROTATED = 'ROTATED',
+  REVOKED = 'REVOKED',
+  DESTROYED = 'DESTROYED',
+}
+
+export enum TokenStatus {
+  ACTIVE = 'ACTIVE',
+  USED = 'USED',
+  EXPIRED = 'EXPIRED',
+  REVOKED = 'REVOKED',
+}
+
+export enum SeverityLevel {
+  LOW = 'LOW',
+  MEDIUM = 'MEDIUM',
+  HIGH = 'HIGH',
+  CRITICAL = 'CRITICAL',
+}
+
+export enum FindingStatus {
+  OPEN = 'OPEN',
+  INVESTIGATING = 'INVESTIGATING',
+  REMEDIATED = 'REMEDIATED',
+  VERIFIED = 'VERIFIED',
+  CLOSED = 'CLOSED',
+}
+
+export enum ScanStatus {
+  RUNNING = 'RUNNING',
+  COMPLETED = 'COMPLETED',
+  FAILED = 'FAILED',
+}
+
+export enum SessionStatus {
+  ACTIVE = 'ACTIVE',
+  EXPIRED = 'EXPIRED',
+  REVOKED = 'REVOKED',
+}
+
+export enum AuditEventType {
+  IDENTITY_CREATED = 'IDENTITY_CREATED',
+  ROLE_ASSIGNED = 'ROLE_ASSIGNED',
+  ROLE_REVOKED = 'ROLE_REVOKED',
+  ASSET_REGISTERED = 'ASSET_REGISTERED',
+  ASSET_ASSIGNED = 'ASSET_ASSIGNED',
+  ASSET_TRANSFERRED = 'ASSET_TRANSFERRED',
+  ACCESS_REQUESTED = 'ACCESS_REQUESTED',
+  ACCESS_GRANTED = 'ACCESS_GRANTED',
+  ACCESS_DENIED = 'ACCESS_DENIED',
+  KEY_POLICY_CREATED = 'KEY_POLICY_CREATED',
+  KEY_ACCESS_APPROVED = 'KEY_ACCESS_APPROVED',
+  KEY_ACCESS_DENIED = 'KEY_ACCESS_DENIED',
+  TEMPORARY_KEY_AUTHORIZED = 'TEMPORARY_KEY_AUTHORIZED',
+  DECRYPTION_STARTED = 'DECRYPTION_STARTED',
+  DECRYPTION_COMPLETED = 'DECRYPTION_COMPLETED',
+  ACCESS_EXPIRED = 'ACCESS_EXPIRED',
+  KEY_ROTATED = 'KEY_ROTATED',
+  KEY_REVOKED = 'KEY_REVOKED',
+  SECURITY_SCAN_STARTED = 'SECURITY_SCAN_STARTED',
+  VULNERABILITY_DETECTED = 'VULNERABILITY_DETECTED',
+  SECURITY_RESPONSE_TRIGGERED = 'SECURITY_RESPONSE_TRIGGERED',
+  BREAK_GLASS_REQUESTED = 'BREAK_GLASS_REQUESTED',
+  BREAK_GLASS_GRANTED = 'BREAK_GLASS_GRANTED',
+  BREAK_GLASS_DENIED = 'BREAK_GLASS_DENIED',
+}
+
+export enum ChainType {
+  CHAIN_1 = 'CHAIN_1',
+  CHAIN_2 = 'CHAIN_2',
+}
+
+export interface User {
+  id: string;
+  display_name: string;
+  email: string | null;
+  status: UserStatus;
+  is_sandbox: boolean;
+  created_at: string;
+  updated_at: string;
+  
+  // Legacy aliases for backward compatibility with Phase 2/4 files
+  did?: string;
+  wallet_address?: string;
+  role?: UserRole;
+}
+
+export interface Role {
+  id: string;
+  name: UserRole;
+  description: string | null;
+}
+
+export interface UserRoleMapping {
+  user_id: string;
+  role_id: string;
+}
+
+export interface DID {
+  id: string;
+  user_id: string;
+  did_string: string;
+  status: UserStatus;
+  registered_at: string;
+}
+
+export interface Wallet {
+  id: string;
+  user_id: string;
+  address: string;
+  status: UserStatus;
+  verified_at: string;
+}
+
+export interface Asset {
+  id: string;
+  asset_code: string;
+  name: string;
+  description: string | null;
+  classification: ClassificationLevel;
+  owner_id: string;
+  storage_path: string | null;
+  status: AssetStatus;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface AssetAssignment {
+  id: string;
+  asset_id: string;
+  user_id: string;
+  assigned_by_id: string;
+  status: AssignmentStatus;
+  created_at: string;
+  revoked_at: string | null;
+}
+
+export interface AssetPermission {
+  id: string;
+  assignment_id: string;
+  can_read: boolean;
+  can_decrypt: boolean;
+  can_transfer: boolean;
+}
+
+export interface AccessRequest {
+  id: string;
+  user_id: string;
+  asset_id: string;
+  purpose: string | null;
+  status: AccessStatus;
+  created_at: string;
+  resolved_at: string | null;
+}
+
+export interface AccessSession {
+  id: string;
+  user_id: string;
+  token_hash: string;
+  ip_address: string | null;
+  created_at: string;
+  expires_at: string;
+}
+
+export interface EncryptionKey {
+  id: string;
+  asset_id: string;
+  algorithm: string;
+  created_at: string;
+  
+  // Backwards compatibility for phase 2 lib
+  key_version?: number;
+  encrypted_dek?: string;
+  dek_iv?: string;
+  key_status?: KeyStatus;
+  created_by_did?: string;
+}
+
+export interface KeyVersion {
+  id: string;
+  key_id: string;
+  version_number: number;
+  encrypted_dek: string;
+  dek_iv: string;
+  status: KeyStatus;
+  created_at: string;
+}
+
+export interface KeyPolicy {
+  id: string;
+  key_id: string;
+  policy_type: string;
+  conditions: any;
+  created_at: string;
+}
+
+export interface KeyAccessEvent {
+  id: string;
+  key_id: string;
+  user_id: string;
+  action: string;
+  timestamp: string;
+}
+
+export interface AuditEvent {
+  id: number;
+  event_type: string;
+  actor_id: string | null;
+  target_type: string | null;
+  target_id: string | null;
+  event_hash: string;
+  prev_hash: string;
+  created_at: string;
+}
+
+export interface SecurityScan {
+  id: string;
+  triggered_by: string | null;
+  status: ScanStatus;
+  passed_count: number;
+  failed_count: number;
+  started_at: string;
+  completed_at: string | null;
+}
+
+export interface SecurityFinding {
+  id: string;
+  scan_id: string;
+  severity: SeverityLevel;
+  description: string;
+  status: FindingStatus;
+  created_at: string;
+}
+
+export interface SecurityIncident {
+  id: string;
+  title: string;
+  severity: SeverityLevel;
+  status: string;
+  created_at: string;
+  resolved_at: string | null;
+}
+
+export interface BreakGlassRequest {
+  id: string;
+  user_id: string;
+  reason: string;
+  status: string;
+  approved_by: string | null;
+  created_at: string;
+  resolved_at: string | null;
+}
+
+export interface BlockchainTransaction {
+  id: string;
+  tx_hash: string;
+  chain_id: ChainType;
+  entity_type: string;
+  entity_id: string;
+  status: string;
+  created_at: string;
+}
+
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  data: T | null;
+  error: { code: string; message: string } | null;
+  meta: { timestamp: string; requestId: string };
+}
+
+export const PERMISSIONS = {
+  manage_users: 'manage_users',
+  assign_roles: 'assign_roles',
+  register_assets: 'register_assets',
+  assign_assets: 'assign_assets',
+  transfer_ownership: 'transfer_ownership',
+  request_access: 'request_access',
+  approve_access: 'approve_access',
+  decrypt_assets: 'decrypt_assets',
+  view_audit_trail: 'view_audit_trail',
+  manage_keys: 'manage_keys',
+  rotate_keys: 'rotate_keys',
+  run_security_scan: 'run_security_scan',
+  view_findings: 'view_findings',
+  emergency_access: 'emergency_access',
+  view_blockchain: 'view_blockchain',
+} as const;
+
+export type Permission = keyof typeof PERMISSIONS;
+
+export const ROLE_PERMISSIONS: Record<UserRole, Permission[]> = {
+  [UserRole.ADMIN]: Object.keys(PERMISSIONS) as Permission[],
+  [UserRole.MANAGER]: [
+    'register_assets', 'assign_assets', 'transfer_ownership',
+    'request_access', 'approve_access', 'decrypt_assets', 'view_blockchain',
+  ],
+  [UserRole.ENGINEER]: ['request_access', 'decrypt_assets', 'view_blockchain'],
+  [UserRole.AUDITOR]: ['view_audit_trail', 'view_findings', 'view_blockchain'],
+  [UserRole.SECURITY_ANALYST]: [
+    'view_audit_trail', 'run_security_scan', 'view_findings', 'view_blockchain',
+  ],
+};
