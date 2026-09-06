@@ -1,22 +1,37 @@
 'use client';
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, Shield } from 'lucide-react';
 import { TechnicalBriefing } from './TechnicalBriefing';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 
 export function TechnicalBriefingButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <Button 
-        onClick={() => setIsOpen(true)}
-        variant="outline"
-        className="bg-primary/10 text-primary border-primary/50 hover:bg-primary/20 hover:text-primary transition-all shadow-[0_0_15px_rgba(0,255,255,0.15)]"
-      >
-        <BookOpen className="w-4 h-4 mr-2" />
-        HOW SECUREMAX WORKS
-      </Button>
+      <Card className="glass-panel border-primary/50 mb-8 bg-primary/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 p-4 opacity-10">
+           <Shield className="w-24 h-24 text-primary" />
+        </div>
+        <CardHeader>
+          <CardTitle className="text-xl font-mono text-primary flex items-center gap-2">
+            <BookOpen className="w-5 h-5" /> HOW SECUREMAX WORKS
+          </CardTitle>
+          <CardDescription className="text-zinc-300">
+            Explore the security architecture, authorization flow, cryptographic controls and enforcement pipeline.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button 
+            onClick={() => setIsOpen(true)}
+            className="bg-primary/90 text-black hover:bg-primary font-bold shadow-[0_0_15px_rgba(0,255,255,0.3)] transition-all font-mono"
+          >
+            OPEN TECHNICAL EXPLORER
+          </Button>
+        </CardContent>
+      </Card>
+      
       {isOpen && <TechnicalBriefing onClose={() => setIsOpen(false)} />}
     </>
   );

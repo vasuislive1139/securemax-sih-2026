@@ -30,6 +30,8 @@ export default async function AdminDashboardPage() {
           </Badge>
         </div>
       </div>
+      <TechnicalBriefingButton />
+
 
       {!result.success ? (
         <Card className="border-destructive glass-panel">
