@@ -36,7 +36,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   const filteredNav = navItems.filter((item) => item.roles.includes(role));
 
   return (
-    <div className="flex h-screen w-full flex-col bg-zinc-950 text-zinc-100 overflow-hidden font-sans">
+    <div className="flex min-h-[100dvh] w-full flex-col bg-zinc-950 text-zinc-100 font-sans">
       {/* Top Header */}
       <header className="flex h-14 shrink-0 items-center justify-between border-b border-zinc-800 bg-[#0a0a0c] px-6">
         
@@ -94,7 +94,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </header>
       
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto bg-zinc-950 relative">
+      <main className="flex-1 bg-zinc-950 relative">
         <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-zinc-900/50 via-transparent to-transparent"></div>
         <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 relative z-10">
           {children}

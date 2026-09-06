@@ -3,9 +3,15 @@
 import React, { useState, useEffect } from 'react';
 import { Fingerprint, Layers, Database, Key, Shield, Lock, Activity, ShieldAlert, CheckCircle2, AlertTriangle, ShieldCheck, FileText, Hexagon } from 'lucide-react';
 import { PresentationMode } from '@/components/dashboard/PresentationMode';
+import { useDemoStore } from '@/stores/useDemoStore';
 
 export default function CyberCommandInterface() {
   const [activeEvent, setActiveEvent] = useState(0);
+  const { presentationModeActive, presentationStage } = useDemoStore();
+
+  const isInit = presentationModeActive && presentationStage === 0;
+  const getStatus = (baseText: string) => isInit ? "CONNECTING..." : baseText;
+  const getColor = () => isInit ? "text-amber-500 animate-pulse" : "text-emerald-500";
 
   // Simple event stream ticker for the demo video
   const events = [
@@ -24,7 +30,7 @@ export default function CyberCommandInterface() {
   }, [events.length]);
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 font-sans selection:bg-cyan-500/30 relative">
+    <div className="min-h-[100dvh] bg-zinc-950 text-zinc-100 font-sans selection:bg-cyan-500/30 relative">
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_top,_var(--tw-gradient-stops))] from-cyan-900/10 via-transparent to-transparent"></div>
       
       {/* Top Bar */}
@@ -56,27 +62,27 @@ export default function CyberCommandInterface() {
             <div className="mt-8 space-y-4 text-xs font-mono tracking-wider">
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">Identity</span>
-                <span className="text-emerald-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> HEALTHY</span>
+                <span className={`flex items-center gap-1 ${getColor()}`}><CheckCircle2 className="w-3 h-3"/> {getStatus('HEALTHY')}</span>
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">Domain 1</span>
-                <span className="text-emerald-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> HEALTHY</span>
+                <span className={`flex items-center gap-1 ${getColor()}`}><CheckCircle2 className="w-3 h-3"/> {getStatus('HEALTHY')}</span>
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">Domain 2</span>
-                <span className="text-emerald-500 flex items-center gap-1"><CheckCircle2 className="w-3 h-3"/> HEALTHY</span>
+                <span className={`flex items-center gap-1 ${getColor()}`}><CheckCircle2 className="w-3 h-3"/> {getStatus('HEALTHY')}</span>
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">KMS</span>
-                <span className="text-cyan-400 flex items-center gap-1"><Lock className="w-3 h-3"/> PROTECTED</span>
+                <span className={`flex items-center gap-1 ${getColor().replace('emerald', 'cyan')}`}><Lock className="w-3 h-3"/> {isInit ? 'INITIALIZING...' : 'PROTECTED'}</span>
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">Sentinel</span>
-                <span className="text-emerald-500 flex items-center gap-1"><Activity className="w-3 h-3"/> ACTIVE</span>
+                <span className={`flex items-center gap-1 ${getColor()}`}><Activity className="w-3 h-3"/> {isInit ? 'INITIALIZING...' : 'ACTIVE'}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-zinc-400">Audit</span>
-                <span className="text-emerald-500 flex items-center gap-1"><ShieldCheck className="w-3 h-3"/> VERIFIED</span>
+                <span className={`flex items-center gap-1 ${getColor()}`}><ShieldCheck className="w-3 h-3"/> {isInit ? 'INITIALIZING...' : 'VERIFIED'}</span>
               </div>
             </div>
           </div>
@@ -97,7 +103,7 @@ export default function CyberCommandInterface() {
                     <div className="text-[10px] text-zinc-500">Cryptographic authentication</div>
                   </div>
                 </div>
-                <div className="text-[10px] font-mono text-emerald-500">● VERIFIED</div>
+                <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('VERIFIED')}</div>
               </div>
               
               <div className="w-px h-6 bg-zinc-800"></div>
@@ -110,7 +116,7 @@ export default function CyberCommandInterface() {
                     <div className="text-[10px] text-zinc-500">Role evaluation</div>
                   </div>
                 </div>
-                <div className="text-[10px] font-mono text-emerald-500">● ENFORCED</div>
+                <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('ENFORCED')}</div>
               </div>
 
               <div className="w-px h-6 bg-zinc-800"></div>
@@ -126,7 +132,7 @@ export default function CyberCommandInterface() {
                       <div className="text-[10px] text-zinc-500">Asset authorization</div>
                     </div>
                   </div>
-                  <div className="text-[10px] font-mono text-emerald-500">● GRANTED</div>
+                  <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('GRANTED')}</div>
                 </div>
               </div>
 
