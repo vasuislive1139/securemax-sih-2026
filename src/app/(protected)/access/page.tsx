@@ -23,7 +23,7 @@ export default function AccessRequestsPage() {
 
       <div className="grid gap-4 md:grid-cols-3">
         {mockRequests.map((req) => (
-          <Card key={req.id} className="glass-panel relative overflow-hidden">
+          <Card key={req.id} className=" relative overflow-hidden">
             <div className={`absolute top-0 left-0 w-1 h-full ${
               req.status === 'PENDING' ? 'bg-amber-500' :
               req.status === 'AUTHORIZED' ? 'bg-emerald-500' : 'bg-red-500'

@@ -38,7 +38,7 @@ export default async function UserDashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-3">
         <div className="md:col-span-2 space-y-6">
-          <Card className="glass-panel border-white/5">
+          <Card className=" border-zinc-800">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-primary" /> Authorized Assets
@@ -49,11 +49,11 @@ export default async function UserDashboardPage() {
               {assignments && assignments.length > 0 ? (
                 <div className="space-y-4">
                   {assignments.map((assignment: any) => (
-                    <div key={assignment.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-md bg-black/40 border border-white/10 hover:border-primary/50 transition-colors">
+                    <div key={assignment.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-md bg-black/40 border border-zinc-800 hover:border-primary/50 transition-colors">
                       <div>
                         <h4 className="font-semibold text-foreground">{assignment.assets?.name || 'Unknown Asset'}</h4>
                         <div className="flex items-center gap-2 mt-1">
-                          <Badge variant="outline" className="text-[10px] text-muted-foreground border-white/10">
+                          <Badge variant="outline" className="text-[10px] text-muted-foreground border-zinc-800">
                             {assignment.assets?.classification || 'CONFIDENTIAL'}
                           </Badge>
                           <span className="text-xs text-muted-foreground font-mono">ID: {assignment.asset_id.substring(0,8)}...</span>
@@ -79,7 +79,7 @@ export default async function UserDashboardPage() {
         </div>
 
         <div className="space-y-6">
-          <Card className="glass-panel border-white/5">
+          <Card className=" border-zinc-800">
             <CardHeader>
               <CardTitle className="text-lg">Recent Requests</CardTitle>
             </CardHeader>
@@ -87,7 +87,7 @@ export default async function UserDashboardPage() {
                {requests && requests.length > 0 ? (
                  <div className="space-y-4">
                    {requests.map((req: any) => (
-                     <div key={req.id} className="flex justify-between items-start border-b border-white/5 pb-3 last:border-0">
+                     <div key={req.id} className="flex justify-between items-start border-b border-zinc-800 pb-3 last:border-0">
                        <div>
                          <p className="text-sm font-medium">{req.assets?.name || 'Asset Access'}</p>
                          <p className="text-xs text-muted-foreground font-mono mt-1">{new Date(req.created_at).toLocaleDateString()}</p>
@@ -104,7 +104,7 @@ export default async function UserDashboardPage() {
             </CardContent>
           </Card>
 
-          <Card className="glass-panel border-white/5 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-cyan-900/20 via-card to-card">
+          <Card className=" border-zinc-800 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-cyan-900/20 via-card to-card">
             <CardHeader>
               <CardTitle className="text-lg">Active Sessions</CardTitle>
             </CardHeader>

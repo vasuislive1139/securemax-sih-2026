@@ -1,114 +1,167 @@
 'use client';
 
-import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ShieldAlert, AlertTriangle, ArrowRight, ShieldCheck, FileSearch } from 'lucide-react';
+import * as React from 'react';
+import { ShieldAlert, Fingerprint, Server, Users, FileLock2, ShieldCheck, Clock, ShieldX } from 'lucide-react';
 import { useDemoStore } from '@/stores/useDemoStore';
 
 export default function IncidentsPage() {
   const { incidents, resolveIncident } = useDemoStore();
+  const [resolving, setResolving] = React.useState<string | null>(null);
+
+  const handleResolve = (id: string) => {
+    setResolving(id);
+    setTimeout(() => {
+      resolveIncident(id);
+      setResolving(null);
+    }, 1500);
+  };
 
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
-        <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground flex items-center">
-            <AlertTriangle className="mr-3 h-8 w-8 text-amber-500" />
-            Incident Center
-          </h2>
-          <p className="text-muted-foreground mt-1">Investigation and containment tracking.</p>
+    <div className="space-y-8 font-sans selection:bg-cyan-500/30 pb-12">
+      <div>
+        <h2 className="text-3xl font-bold tracking-tight text-zinc-100 uppercase flex items-center gap-3">
+          <ShieldAlert className="h-6 w-6 text-red-500" />
+          Incident Investigation
+        </h2>
+        <p className="text-sm text-zinc-500 font-mono tracking-widest mt-1 uppercase">SOC Analysis & Containment</p>
+      </div>
+
+      {incidents.length === 0 ? (
+        <div className="bg-[#0a0a0c] border border-zinc-800 rounded-lg p-16 flex flex-col items-center justify-center text-zinc-600">
+          <ShieldCheck className="h-12 w-12 mb-4 opacity-50 text-emerald-500" />
+          <p className="text-xs font-mono tracking-widest uppercase">No Active Security Incidents</p>
         </div>
-      </div>
-
-      <div className="space-y-4">
-        {incidents.length === 0 ? (
-          <Card className="glass-panel tech-border border-white/5 opacity-70">
-             <CardContent className="flex flex-col items-center justify-center py-16">
-               <ShieldCheck className="h-12 w-12 text-emerald-500/50 mb-4" />
-               <p className="text-emerald-400 font-mono text-sm">NO ACTIVE INCIDENTS</p>
-             </CardContent>
-          </Card>
-        ) : (
-          incidents.map((incident) => (
-            <Card key={incident.id} className={`glass-panel ${incident.status === 'OPEN' ? 'border-amber-500/50 bg-amber-500/5' : 'border-white/5'}`}>
-              <CardHeader className="flex flex-row items-start justify-between">
-                <div>
-                  <div className="flex items-center gap-3">
-                    <CardTitle className={`text-lg ${incident.status === 'OPEN' ? 'text-amber-500' : 'text-foreground'}`}>
-                      {incident.title}
-                    </CardTitle>
-                    <Badge variant="outline" className={incident.status === 'OPEN' ? 'border-amber-500 text-amber-500' : 'border-emerald-500 text-emerald-500'}>
-                      {incident.status}
-                    </Badge>
-                  </div>
-                  <CardDescription className="font-mono text-xs mt-1">ID: {incident.id}</CardDescription>
-                </div>
-                
-                {incident.status === 'OPEN' && (
-                  <Button onClick={() => resolveIncident(incident.id)} variant="outline" className="border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10">
-                     <ShieldCheck className="w-4 h-4 mr-2" /> CONTAIN THREAT & RECOVER
-                  </Button>
-                )}
-              </CardHeader>
-              <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                   <div className="space-y-3">
-                     <div className="flex justify-between items-center p-2 rounded bg-black/40 border border-white/5 text-sm">
-                       <span className="text-muted-foreground">Detection Layer</span>
-                       <span className="font-mono text-emerald-400">{incident.detectionLayer}</span>
+      ) : (
+        <div className="space-y-8">
+          {incidents.map((incident) => {
+            const isContained = incident.status === 'THREAT CONTAINED';
+            
+            return (
+              <div key={incident.id} className={`bg-[#0a0a0c] border ${isContained ? 'border-emerald-500/30' : 'border-red-500/30'} rounded-lg overflow-hidden transition-colors duration-500`}>
+                <div className={`p-6 border-b ${isContained ? 'border-emerald-500/30 bg-emerald-500/5' : 'border-red-500/30 bg-red-500/5'}`}>
+                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                     <div>
+                       <div className="flex items-center gap-3 mb-2">
+                         <div className="text-[10px] font-mono tracking-widest text-zinc-500">{incident.id}</div>
+                         <div className={`text-[10px] font-mono tracking-widest px-2 py-0.5 rounded ${isContained ? 'bg-emerald-500/20 text-emerald-500' : 'bg-red-500/20 text-red-500 animate-pulse'}`}>
+                           {isContained ? 'CONTAINED' : incident.status}
+                         </div>
+                       </div>
+                       <h3 className={`text-xl font-bold tracking-widest uppercase ${isContained ? 'text-zinc-300' : 'text-red-400'}`}>{incident.title}</h3>
                      </div>
-                     <div className="flex justify-between items-center p-2 rounded bg-black/40 border border-white/5 text-sm">
-                       <span className="text-muted-foreground">Blocked Layer</span>
-                       <span className="font-mono text-destructive">{incident.blockedLayer}</span>
-                     </div>
-                     <div className="flex justify-between items-center p-2 rounded bg-black/40 border border-white/5 text-sm">
-                       <span className="text-muted-foreground">Affected Asset</span>
-                       <span className="font-mono">{incident.affectedAsset}</span>
-                     </div>
-                     <div className="flex justify-between items-center p-2 rounded bg-black/40 border border-white/5 text-sm">
-                       <span className="text-muted-foreground">Source</span>
-                       <span className="font-mono text-amber-500">{incident.source}</span>
-                     </div>
+                     {!isContained && (
+                       <button 
+                         onClick={() => handleResolve(incident.id)}
+                         disabled={resolving === incident.id}
+                         className="font-mono text-[10px] tracking-widest uppercase px-6 py-3 rounded bg-zinc-100 text-zinc-950 hover:bg-white transition-colors flex items-center gap-2"
+                       >
+                         {resolving === incident.id ? 'CONTAINING...' : 'CONTAIN THREAT'}
+                       </button>
+                     )}
                    </div>
+                </div>
 
-                   <div className="bg-black/60 border border-white/5 p-4 rounded-lg relative overflow-hidden">
-                      <h4 className="text-xs font-semibold text-muted-foreground mb-4 flex items-center">
-                        <FileSearch className="w-4 h-4 mr-2" /> INVESTIGATION TIMELINE
-                      </h4>
-                      <div className="space-y-4 relative z-10">
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                          <span className="text-xs font-mono text-emerald-400">REQUEST RECEIVED</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-amber-500" />
-                          <span className="text-xs font-mono text-amber-500">THREAT DETECTED ({incident.detectionLayer})</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-destructive" />
-                          <span className="text-xs font-mono text-destructive">BLOCKED ({incident.blockedLayer})</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-primary" />
-                          <span className="text-xs font-mono text-primary">AUDIT RECORDED</span>
-                        </div>
-                        {incident.status === 'THREAT CONTAINED' && (
-                          <div className="flex items-center gap-3">
-                            <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                            <span className="text-xs font-mono text-emerald-400">CONTAINMENT & RECOVERY COMPLETE</span>
-                          </div>
-                        )}
+                <div className="p-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+                  
+                  {/* Attack Path */}
+                  <div>
+                    <h4 className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase pb-4 mb-6 border-b border-zinc-800">Attack Path Execution</h4>
+                    <div className="flex flex-col space-y-4">
+                      
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-zinc-400"><Fingerprint className="w-4 h-4"/></div>
+                        <span className="font-mono text-xs text-zinc-300 w-24">IDENTITY</span>
+                        <span className="text-[10px] font-mono text-emerald-500">✓ PASSED</span>
                       </div>
-                      <div className="absolute left-[23px] top-6 bottom-4 w-px bg-white/10 z-0" />
-                   </div>
+                      <div className="w-px h-4 bg-zinc-800 ml-4"></div>
+                      
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-zinc-400"><Server className="w-4 h-4"/></div>
+                        <span className="font-mono text-xs text-zinc-300 w-24">SESSION</span>
+                        <span className="text-[10px] font-mono text-emerald-500">✓ PASSED</span>
+                      </div>
+                      <div className="w-px h-4 bg-zinc-800 ml-4"></div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-zinc-400"><Users className="w-4 h-4"/></div>
+                        <span className="font-mono text-xs text-zinc-300 w-24">RBAC</span>
+                        <span className="text-[10px] font-mono text-emerald-500">✓ PASSED</span>
+                      </div>
+                      <div className="w-px h-4 bg-zinc-800 ml-4"></div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded border border-zinc-800 bg-zinc-900 flex items-center justify-center text-zinc-400"><FileLock2 className="w-4 h-4"/></div>
+                        <span className="font-mono text-xs text-zinc-300 w-24">ASSET POLICY</span>
+                        <span className="text-[10px] font-mono text-emerald-500">✓ PASSED</span>
+                      </div>
+                      <div className="w-px h-4 bg-red-500/50 ml-4"></div>
+
+                      <div className="flex items-center gap-4">
+                        <div className="w-8 h-8 rounded border border-red-500 bg-red-500/10 flex items-center justify-center text-red-500"><ShieldX className="w-4 h-4"/></div>
+                        <span className="font-mono text-xs text-red-400 w-24">SENTINEL</span>
+                        <span className="text-[10px] font-mono text-red-500 font-bold bg-red-500/20 px-2 py-0.5 rounded">BLOCKED</span>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* Incident Timeline */}
+                  <div>
+                    <h4 className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase pb-4 mb-6 border-b border-zinc-800">Incident Timeline</h4>
+                    <div className="space-y-6">
+                      <div className="flex gap-6">
+                        <div className="text-[10px] font-mono text-zinc-500 pt-1">00:00:01</div>
+                        <div>
+                          <div className="text-xs font-mono text-zinc-300">Attempt</div>
+                          <div className="text-[10px] font-mono text-zinc-500 mt-1">Malicious payload injected</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="text-[10px] font-mono text-zinc-500 pt-1">00:00:02</div>
+                        <div>
+                          <div className="text-xs font-mono text-red-400">Detection</div>
+                          <div className="text-[10px] font-mono text-zinc-500 mt-1">Detected by {incident.detectionLayer}</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="text-[10px] font-mono text-zinc-500 pt-1">00:00:03</div>
+                        <div>
+                          <div className="text-xs font-mono text-red-400">Block</div>
+                          <div className="text-[10px] font-mono text-zinc-500 mt-1">Halted at {incident.blockedLayer}</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="text-[10px] font-mono text-zinc-500 pt-1">00:00:04</div>
+                        <div>
+                          <div className="text-xs font-mono text-emerald-500">Policy Enforcement</div>
+                          <div className="text-[10px] font-mono text-zinc-500 mt-1">Access permanently revoked</div>
+                        </div>
+                      </div>
+                      <div className="flex gap-6">
+                        <div className="text-[10px] font-mono text-zinc-500 pt-1">00:00:05</div>
+                        <div>
+                          <div className="text-xs font-mono text-emerald-500">Audit</div>
+                          <div className="text-[10px] font-mono text-zinc-500 mt-1">Evidence hashed and anchored</div>
+                        </div>
+                      </div>
+                      {isContained && (
+                        <div className="flex gap-6">
+                          <div className="text-[10px] font-mono text-emerald-500 pt-1">00:00:06</div>
+                          <div>
+                            <div className="text-xs font-mono text-emerald-500">Containment</div>
+                            <div className="text-[10px] font-mono text-zinc-500 mt-1">Threat contained by SOC</div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
                 </div>
-              </CardContent>
-            </Card>
-          ))
-        )}
-      </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

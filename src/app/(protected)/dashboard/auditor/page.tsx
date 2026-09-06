@@ -24,7 +24,7 @@ export default async function AuditorDashboardPage() {
           <p className="text-muted-foreground mt-1">Tamper-evident cryptographic event ledger. Selected security events can be blockchain-anchored for independent integrity verification.</p>
         </div>
         <div className="flex items-center gap-3 mt-4 sm:mt-0">
-          <Button variant="outline" className="border-white/10 hover:bg-white/5">
+          <Button variant="outline" className="border-zinc-800 hover:bg-white/5">
             <Download className="w-4 h-4 mr-2" /> Export CSV
           </Button>
           <Badge variant="outline" className="border-purple-500/50 text-purple-400 px-4 py-1.5 font-mono">
@@ -33,8 +33,8 @@ export default async function AuditorDashboardPage() {
         </div>
       </div>
 
-      <Card className="glass-panel border-white/5">
-        <CardHeader className="border-b border-white/5 pb-4">
+      <Card className=" border-zinc-800">
+        <CardHeader className="border-b border-zinc-800 pb-4">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <CardTitle>System Events</CardTitle>
@@ -43,9 +43,9 @@ export default async function AuditorDashboardPage() {
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <div className="relative w-full sm:w-64">
                 <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input type="text" placeholder="Search hash, ID, or event..." className="pl-9 bg-black/40 border-white/10" />
+                <Input type="text" placeholder="Search hash, ID, or event..." className="pl-9 bg-black/40 border-zinc-800" />
               </div>
-              <Button variant="outline" size="icon" className="border-white/10 shrink-0">
+              <Button variant="outline" size="icon" className="border-zinc-800 shrink-0">
                 <Filter className="h-4 w-4" />
               </Button>
             </div>
@@ -56,11 +56,11 @@ export default async function AuditorDashboardPage() {
             <table className="w-full text-sm text-left">
               <thead className="text-xs text-muted-foreground uppercase bg-black/20 font-mono">
                 <tr>
-                  <th className="px-6 py-4 font-medium border-b border-white/5">Timestamp</th>
-                  <th className="px-6 py-4 font-medium border-b border-white/5">Event Type</th>
-                  <th className="px-6 py-4 font-medium border-b border-white/5">Actor</th>
-                  <th className="px-6 py-4 font-medium border-b border-white/5">Target</th>
-                  <th className="px-6 py-4 font-medium border-b border-white/5 text-right">Event Hash</th>
+                  <th className="px-6 py-4 font-medium border-b border-zinc-800">Timestamp</th>
+                  <th className="px-6 py-4 font-medium border-b border-zinc-800">Event Type</th>
+                  <th className="px-6 py-4 font-medium border-b border-zinc-800">Actor</th>
+                  <th className="px-6 py-4 font-medium border-b border-zinc-800">Target</th>
+                  <th className="px-6 py-4 font-medium border-b border-zinc-800 text-right">Event Hash</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
@@ -99,7 +99,7 @@ export default async function AuditorDashboardPage() {
               </tbody>
             </table>
           </div>
-          <div className="p-4 border-t border-white/5 bg-black/20 flex justify-between items-center text-xs text-muted-foreground">
+          <div className="p-4 border-t border-zinc-800 bg-black/20 flex justify-between items-center text-xs text-muted-foreground">
             <span>Showing recent 15 events</span>
             <div className="flex gap-2">
               <Button variant="ghost" size="sm" disabled>Previous</Button>

@@ -87,7 +87,7 @@ export default function SecurityCenterPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="glass-panel tech-border">
+        <Card className=" ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Posture Status</CardTitle>
             {isHealthy ? <ShieldCheck className="h-4 w-4 text-emerald-500" /> : <ShieldAlert className="h-4 w-4 text-destructive" />}
@@ -98,7 +98,7 @@ export default function SecurityCenterPage() {
           </CardContent>
         </Card>
         
-        <Card className="glass-panel tech-border">
+        <Card className=" ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Open Incidents</CardTitle>
             <ShieldAlert className="h-4 w-4 text-amber-500" />
@@ -109,18 +109,18 @@ export default function SecurityCenterPage() {
           </CardContent>
         </Card>
 
-        <Card className="glass-panel tech-border">
+        <Card className=" ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Scan Checks Passed</CardTitle>
             <Activity className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-primary glow-cyan">{lastScan?.passed_count || 0}</div>
+            <div className="text-2xl font-bold font-mono text-primary ">{lastScan?.passed_count || 0}</div>
             <p className="text-xs text-muted-foreground mt-1">Successfully mitigated</p>
           </CardContent>
         </Card>
 
-        <Card className={`glass-panel ${lastScan?.failed_count > 0 ? 'border-destructive/50' : 'tech-border'}`}>
+        <Card className={` ${lastScan?.failed_count > 0 ? 'border-destructive/50' : ''}`}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-muted-foreground">Scan Checks Failed</CardTitle>
             <ShieldAlert className="h-4 w-4 text-destructive" />
@@ -133,7 +133,7 @@ export default function SecurityCenterPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <Card className="glass-panel border-white/5">
+        <Card className=" border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <ShieldAlert className="w-5 h-5 text-amber-500" /> Recent Findings
@@ -146,7 +146,7 @@ export default function SecurityCenterPage() {
             ) : data.findings.length > 0 ? (
               <div className="space-y-3">
                 {data.findings.map(finding => (
-                  <div key={finding.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-md bg-black/40 border border-white/5 hover:border-white/10 transition-colors gap-3">
+                  <div key={finding.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-md bg-black/40 border border-zinc-800 hover:border-zinc-800 transition-colors gap-3">
                     <div className="space-y-1">
                       <p className="text-sm font-medium leading-tight">{finding.description.split('-')[0]}</p>
                       <p className="text-[10px] font-mono text-muted-foreground">{new Date(finding.created_at).toLocaleString()}</p>
@@ -166,7 +166,7 @@ export default function SecurityCenterPage() {
           </CardContent>
         </Card>
 
-        <Card className="glass-panel border-white/5">
+        <Card className=" border-zinc-800">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
                <Activity className="w-5 h-5 text-primary" /> Scan History
@@ -179,7 +179,7 @@ export default function SecurityCenterPage() {
             ) : data.scans.length > 0 ? (
               <div className="space-y-3">
                 {data.scans.map(scan => (
-                  <div key={scan.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-md bg-black/40 border border-white/5 hover:border-white/10 transition-colors gap-3">
+                  <div key={scan.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded-md bg-black/40 border border-zinc-800 hover:border-zinc-800 transition-colors gap-3">
                     <div className="space-y-1">
                       <p className="text-sm font-medium">Automated Sandbox Scan</p>
                       <p className="text-[10px] font-mono text-muted-foreground">{new Date(scan.started_at).toLocaleString()}</p>

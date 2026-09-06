@@ -107,7 +107,7 @@ export function PresentationMode() {
       
       {presentationModeActive && presentationStage === 7 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-none">
-          <div className="bg-black/90 border border-emerald-500/40 p-8 rounded-lg shadow-[0_0_40px_rgba(16,185,129,0.2)] flex flex-col items-center">
+          <div className="bg-black/90 border border-emerald-500/40 p-8 rounded-lg  flex flex-col items-center">
             <h2 className="text-2xl font-mono text-emerald-500 mb-6 tracking-widest">THREAT CONTAINED</h2>
             <div className="space-y-3 font-mono text-sm w-72">
               <div className="flex justify-between"><span>Sentinel</span><span className="text-emerald-500">CLEAR</span></div>
@@ -123,8 +123,8 @@ export function PresentationMode() {
       
       {presentationModeActive && presentationStage === 3 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm pointer-events-none">
-          <div className="bg-black/90 border border-red-500/60 p-8 rounded-lg shadow-[0_0_50px_rgba(239,68,68,0.3)] flex flex-col items-center">
-            <h2 className="text-3xl font-mono text-red-500 mb-6 font-bold glow-text">TOKEN REPLAY ATTEMPT</h2>
+          <div className="bg-black/90 border border-red-500/60 p-8 rounded-lg  flex flex-col items-center">
+            <h2 className="text-3xl font-mono text-red-500 mb-6 font-bold ">TOKEN REPLAY ATTEMPT</h2>
             <div className="space-y-4 font-mono text-sm w-72 text-center">
               <div className="text-zinc-300">Sentinel Engine: <span className="text-red-500 font-bold">THREAT DETECTED</span></div>
               <div className="text-zinc-300">Policy Enforcement: <span className="text-red-500 font-bold">ACCESS BLOCKED</span></div>
@@ -137,7 +137,7 @@ export function PresentationMode() {
       
       {presentationModeActive && presentationStage === 5 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-none">
-          <div className="bg-[#050505] border border-red-500/30 p-8 rounded-lg shadow-2xl w-full max-w-2xl">
+          <div className="bg-[#050505] border border-red-500/30 p-8 rounded-lg  w-full max-w-2xl">
             <h3 className="text-red-500 font-mono font-bold mb-4 flex items-center gap-2 tracking-widest"><ShieldAlert className="w-5 h-5"/> INCIDENT INVESTIGATION</h3>
             
             <div className="grid grid-cols-2 gap-4 mb-6 text-sm font-mono text-zinc-300">
@@ -175,8 +175,8 @@ export function PresentationMode() {
       
       {presentationModeActive && presentationStage === 1 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 backdrop-blur-sm pointer-events-none">
-          <div className="bg-[#050505] border border-emerald-500/30 p-8 rounded-lg shadow-2xl flex flex-col items-center">
-            <h2 className="text-2xl font-mono text-emerald-400 mb-6 tracking-widest glow-text">NORMAL OPERATION</h2>
+          <div className="bg-[#050505] border border-emerald-500/30 p-8 rounded-lg  flex flex-col items-center">
+            <h2 className="text-2xl font-mono text-emerald-400 mb-6 tracking-widest ">NORMAL OPERATION</h2>
             <div className="space-y-3 font-mono text-sm w-80 text-center">
               <div className="flex justify-between"><span>Ethereum Sepolia</span><span className="text-emerald-500">✓ ACTIVE</span></div>
               <div className="flex justify-between"><span>Healthy Contracts</span><span className="text-emerald-500">✓ VERIFIED</span></div>
@@ -193,7 +193,7 @@ export function PresentationMode() {
 
       {/* Narrative Timeline overlay */}
       {presentationModeActive && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-black/90 border-b border-primary/30 shadow-2xl shadow-primary/10">
+        <div className="fixed top-0 left-0 right-0 z-50 bg-black/90 border-b border-primary/30 ">
           <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
             <div className="flex items-center gap-4">
               <span className="animate-pulse flex h-3 w-3 rounded-full bg-primary"></span>
@@ -213,7 +213,7 @@ export function PresentationMode() {
       {/* OVERLAYS based on Phase */}
       {presentationModeActive && presentationStage === 0 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-none">
-          <div className="bg-black/90 border border-primary/40 p-8 rounded-lg shadow-2xl flex flex-col items-center">
+          <div className="bg-black/90 border border-primary/40 p-8 rounded-lg  flex flex-col items-center">
             <h2 className="text-2xl font-mono text-primary mb-6">SYSTEM INITIALIZATION</h2>
             <div className="space-y-3 font-mono text-sm w-64">
               <div className="flex justify-between"><span>Identity</span><CheckCircle2 className="w-4 h-4 text-emerald-500" /></div>
@@ -229,7 +229,7 @@ export function PresentationMode() {
 
       {presentationModeActive && presentationStage === 2 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-none">
-          <div className="bg-black/90 border border-amber-500/40 p-8 rounded-lg shadow-2xl flex flex-col items-center">
+          <div className="bg-black/90 border border-amber-500/40 p-8 rounded-lg  flex flex-col items-center">
             <h2 className="text-2xl font-mono text-amber-500 mb-6">SECURITY CONTROL VALIDATION</h2>
             <div className="space-y-3 font-mono text-sm w-80">
               <div className="flex justify-between"><span>1. Unauthorized Asset Access</span><CheckCircle2 className="w-4 h-4 text-emerald-500" /></div>
@@ -244,8 +244,8 @@ export function PresentationMode() {
 
       {presentationModeActive && presentationStage === 4 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/80 backdrop-blur-md pointer-events-none">
-          <div className="bg-[#0a0a0c] border-2 border-red-500/50 p-10 rounded-lg shadow-[0_0_50px_rgba(239,68,68,0.3)] flex flex-col items-center">
-            <h1 className="text-4xl font-bold font-mono text-red-500 mb-2 glow-text">AUTHORIZATION ≠ DECRYPTION</h1>
+          <div className="bg-[#0a0a0c] border-2 border-red-500/50 p-10 rounded-lg  flex flex-col items-center">
+            <h1 className="text-4xl font-bold font-mono text-red-500 mb-2 ">AUTHORIZATION ≠ DECRYPTION</h1>
             <p className="text-zinc-400 font-mono text-sm mb-8 tracking-widest text-center">DOMAIN 1 AUTHORIZATION DOES NOT BYPASS DOMAIN 2 CRYPTOGRAPHY</p>
             
             <div className="grid grid-cols-2 gap-x-12 gap-y-4 font-mono text-sm w-full max-w-2xl">
@@ -270,7 +270,7 @@ export function PresentationMode() {
 
       {presentationModeActive && presentationStage === 6 && (
         <div className="fixed inset-0 z-40 flex flex-col justify-end p-12 pointer-events-none">
-          <div className="bg-black/90 border-l-4 border-cyan-500 p-6 rounded shadow-2xl max-w-md">
+          <div className="bg-black/90 border-l-4 border-cyan-500 p-6 rounded  max-w-md">
             <h3 className="text-cyan-400 font-mono font-bold mb-4 flex items-center gap-2"><ShieldCheck className="w-5 h-5"/> TAMPER-EVIDENT AUDIT</h3>
             <div className="space-y-2 text-xs font-mono mb-4">
               <div className="flex justify-between"><span>Audit Event</span><span className="text-zinc-300">✓ HASHED</span></div>
@@ -293,14 +293,14 @@ export function PresentationMode() {
       {presentationModeActive && presentationStage === 8 && (
         <div className="fixed inset-0 z-40 flex items-center justify-center bg-[#050505] backdrop-blur-xl pointer-events-auto">
           <div className="flex flex-col items-center justify-center space-y-6">
-            <h1 className="text-5xl font-extrabold tracking-widest text-primary glow-text">SECUREMAX</h1>
+            <h1 className="text-5xl font-extrabold tracking-widest text-primary ">SECUREMAX</h1>
             <div className="text-xl font-mono text-emerald-400 tracking-widest bg-emerald-500/10 px-6 py-2 rounded-full border border-emerald-500/30">
               SECURITY FABRIC: OPERATIONAL
             </div>
             
             <div className="h-16"></div>
             
-            <h2 className="text-3xl font-bold font-mono text-red-500 tracking-widest glow-text">AUTHORIZATION ≠ DECRYPTION</h2>
+            <h2 className="text-3xl font-bold font-mono text-red-500 tracking-widest ">AUTHORIZATION ≠ DECRYPTION</h2>
             
             <div className="h-4"></div>
             
@@ -315,7 +315,7 @@ export function PresentationMode() {
         <Button 
           onClick={togglePresentation} 
           variant={presentationModeActive ? "destructive" : "default"}
-          className={`shadow-2xl font-mono font-bold border border-primary/50 ${presentationModeActive ? 'animate-pulse' : 'bg-primary/90 text-black hover:bg-primary'}`}
+          className={` font-mono font-bold border border-primary/50 ${presentationModeActive ? 'animate-pulse' : 'bg-primary/90 text-black hover:bg-primary'}`}
         >
           {presentationModeActive ? (
             <><Square className="w-4 h-4 mr-2" /> EXIT PRESENTATION</>

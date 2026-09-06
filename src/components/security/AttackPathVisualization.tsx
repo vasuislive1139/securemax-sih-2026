@@ -38,7 +38,7 @@ export function AttackPathVisualization() {
   };
 
   return (
-    <Card className="glass-panel tech-border overflow-hidden relative">
+    <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg overflow-hidden relative">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
       
       <CardHeader>
@@ -71,8 +71,8 @@ export function AttackPathVisualization() {
                 <div className="flex flex-col items-center min-w-[70px] relative">
                   <div className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center transition-all duration-300 ${
                     status === 'passed' ? 'border-emerald-500 bg-emerald-500/10 text-emerald-400' :
-                    status === 'active' ? 'border-amber-500 bg-amber-500/20 text-amber-500 scale-110 shadow-[0_0_15px_rgba(245,158,11,0.4)]' :
-                    status === 'blocked' ? 'border-destructive bg-destructive/20 text-destructive scale-110 shadow-[0_0_15px_rgba(239,68,68,0.4)]' :
+                    status === 'active' ? 'border-amber-500 bg-amber-500/20 text-amber-500 scale-110 ' :
+                    status === 'blocked' ? 'border-destructive bg-destructive/20 text-destructive scale-110 ' :
                     status === 'denied' ? 'border-destructive/30 bg-destructive/5 text-destructive/50' :
                     'border-muted/30 bg-muted/5 text-muted-foreground'
                   }`}>

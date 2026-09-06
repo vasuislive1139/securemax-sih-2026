@@ -1,178 +1,210 @@
-import * as React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Activity, Users, ShieldAlert, Key, HardDrive, ShieldCheck, AlertCircle, Play } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
 import { getDashboardMetrics } from '@/app/actions/dashboard';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Shield, Users, HardDrive, Key, AlertCircle, ShieldAlert, Activity, ShieldCheck, Play, Hexagon, Database, Lock } from 'lucide-react';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { AssignAssetButton } from '@/components/ui/AssignAssetButton';
 import { TechnicalBriefingButton } from '@/components/dashboard/TechnicalBriefingButton';
+import { AssignAssetButton } from '@/components/ui/AssignAssetButton';
 
-export default async function AdminDashboardPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function AdminDashboard() {
   const result = await getDashboardMetrics();
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+    <div className="space-y-8 font-sans selection:bg-cyan-500/30 pb-20">
+      
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">Admin Overview</h2>
-          <p className="text-muted-foreground mt-1">System telemetry and active security events.</p>
+          <h1 className="text-3xl font-bold tracking-tight text-zinc-100 uppercase">Command Center</h1>
+          <p className="text-sm text-zinc-500 font-mono tracking-widest mt-1 uppercase">Global Security Posture</p>
         </div>
-        <div className="flex items-center gap-3 mt-4 sm:mt-0">
-          <Link href="/dashboard/security">
-             <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">
-               <ShieldCheck className="w-4 h-4 mr-2" /> Security Center
-             </Button>
-          </Link>
-          <Badge variant={result.success ? 'outline' : 'destructive'} className={result.success ? "border-emerald-500/50 text-emerald-500 px-4 py-1.5" : "px-4 py-1.5"}>
-            <Activity className="mr-2 h-4 w-4 animate-pulse" />
+        <div className="flex items-center gap-4">
+          <Badge variant={result.success ? 'outline' : 'destructive'} className={result.success ? "border-emerald-500/30 text-emerald-500 px-4 py-1.5 font-mono text-[10px] tracking-widest bg-emerald-500/10" : "px-4 py-1.5 font-mono text-[10px] tracking-widest"}>
+            <Activity className="mr-2 h-3 w-3 animate-pulse" />
             {result.success ? 'SYSTEM ONLINE' : 'UNAVAILABLE'}
           </Badge>
         </div>
       </div>
-      <TechnicalBriefingButton />
-
 
       {!result.success ? (
-        <Card className="border-destructive glass-panel">
-          <CardContent className="flex flex-col items-center justify-center p-8 text-center">
-            <AlertCircle className="h-12 w-12 text-destructive mb-4" />
-            <h3 className="text-xl font-semibold text-destructive">Database Connection Refused</h3>
-            <p className="text-sm text-destructive/80 mt-2 max-w-md">
-              SecureMax could not connect to the Supabase instance. Ensure environment variables are configured and the 21-table schema has been migrated.
+        <Card className="border-red-500/30 bg-[#0a0a0c]">
+          <CardContent className="flex flex-col items-center justify-center p-12 text-center">
+            <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
+            <h3 className="text-xl font-mono text-red-500 uppercase tracking-widest">Database Connection Refused</h3>
+            <p className="text-sm text-zinc-500 mt-4 max-w-md font-mono">
+              SecureMax could not connect to the Supabase instance. Ensure environment variables are configured.
             </p>
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="glass-panel tech-border">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Registered Personnel</CardTitle>
-              <Users className="h-4 w-4 text-primary" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-mono font-bold text-primaryglow-cyan">{result.data?.totalUsers}</div>
-              <p className="text-xs text-muted-foreground mt-1">DIDs across all roles</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="glass-panel tech-border">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Encrypted Assets</CardTitle>
-              <HardDrive className="h-4 w-4 text-cyan-400" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-mono font-bold text-cyan-400">{result.data?.activeAssets}</div>
-              <p className="text-xs text-muted-foreground mt-1">Secured via AES-256-GCM</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="glass-panel tech-border">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">Access Requests</CardTitle>
-              <Key className="h-4 w-4 text-amber-500" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-mono font-bold text-amber-500">{result.data?.pendingAccessRequests}</div>
-              <p className="text-xs text-muted-foreground mt-1 mb-4">Awaiting context validation</p>
-              
-              {/* Added for E2E Blockchain Verification Phase */}
-              <div className="pt-2 border-t border-white/10">
-                <p className="text-xs text-muted-foreground mb-2">Pending: did:test:user1</p>
-                <AssignAssetButton assetId="asset-123" assigneeDid="did:test:user1" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="glass-panel border-destructive/30">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-destructive">Critical Alerts</CardTitle>
-              <ShieldAlert className="h-4 w-4 text-destructive animate-pulse" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-3xl font-mono font-bold text-destructive">{result.data?.criticalAlerts}</div>
-              <p className="text-xs text-muted-foreground mt-1">Sentinel findings & incidents</p>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {result.success && (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
-          <Card className="col-span-4 glass-panel border-white/5">
-            <CardHeader>
-              <CardTitle>Tamper-Evident Audit Trail</CardTitle>
-              <CardDescription>Cryptographically anchored events across the mesh network.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              {result.data?.recentAudits && result.data.recentAudits.length > 0 ? (
-                <div className="space-y-4">
-                  {result.data.recentAudits.map((audit: any) => (
-                    <div key={audit.id} className="flex flex-col sm:flex-row sm:items-center justify-between p-3 rounded bg-black/40 border border-white/5">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <Badge variant="outline" className="text-[10px] uppercase font-mono tracking-wider border-primary/30 text-primary">
-                            {audit.event_type}
-                          </Badge>
-                          <span className="text-xs text-muted-foreground font-mono">
-                            {new Date(audit.created_at).toLocaleString()}
-                          </span>
-                        </div>
-                        <p className="text-sm font-medium text-foreground/80 break-all sm:break-normal">
-                          Target: {audit.target_id || 'N/A'}
-                        </p>
-                      </div>
-                      <div className="mt-2 sm:mt-0 text-right">
-                        <p className="text-[10px] text-muted-foreground font-mono truncate max-w-[200px]">
-                          Hash: {audit.event_hash}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+        <>
+          {/* Posture Score */}
+          <div className="bg-[#0a0a0c] border border-zinc-800 rounded-lg p-6 flex flex-col md:flex-row justify-between items-center gap-8">
+             <div className="flex items-center gap-6">
+                <div className="relative flex items-center justify-center w-24 h-24 rounded-full border-4 border-emerald-500/20">
+                   <div className="text-3xl font-light text-zinc-100">92</div>
+                   <svg className="absolute inset-0 w-full h-full -rotate-90">
+                      <circle cx="44" cy="44" r="44" className="stroke-emerald-500 fill-none stroke-[4] stroke-dasharray-[276] stroke-dashoffset-[22]" style={{ transform: 'translate(4px, 4px)' }} />
+                   </svg>
                 </div>
-              ) : (
-                <div className="flex flex-col items-center justify-center py-10 opacity-50">
-                  <ShieldCheck className="h-10 w-10 text-muted-foreground mb-4" />
-                  <p className="text-sm text-muted-foreground">No recent audit events.</p>
+                <div>
+                   <h2 className="text-2xl font-mono text-zinc-100 uppercase tracking-widest">Security Posture</h2>
+                   <div className="text-sm font-mono text-emerald-500 tracking-widest mt-1">HEALTHY</div>
                 </div>
-              )}
-            </CardContent>
-          </Card>
-          
-          <Card className="col-span-3 glass-panel border-white/5 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/10 via-card to-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Activity className="w-5 h-5 text-primary" /> Sentinel Engine
-              </CardTitle>
-              <CardDescription>Autonomous security sandbox status</CardDescription>
-            </CardHeader>
-            <CardContent>
-               <div className="space-y-6">
-                 <div className="p-4 rounded-md border border-white/10 bg-black/50">
-                   <h4 className="text-sm font-semibold mb-2">Sandbox Environment</h4>
-                   <div className="flex justify-between text-sm mb-1">
-                     <span className="text-muted-foreground">Status</span>
-                     <span className="text-emerald-400 font-mono">ONLINE</span>
-                   </div>
-                   <div className="flex justify-between text-sm mb-1">
-                     <span className="text-muted-foreground">Test Suites</span>
-                     <span className="font-mono text-primary">5</span>
-                   </div>
-                   <div className="flex justify-between text-sm">
-                     <span className="text-muted-foreground">Execution Mode</span>
-                     <span className="font-mono text-cyan-400">DETERMINISTIC</span>
-                   </div>
-                 </div>
-
-                 <Link href="/dashboard/security" className="block w-full">
-                   <Button className="w-full bg-primary/20 text-primary hover:bg-primary/30 border border-primary/50">
-                     <Play className="w-4 h-4 mr-2" /> Launch Security Scan
-                   </Button>
-                 </Link>
+             </div>
+             
+             {/* Sub-systems Health */}
+             <div className="grid grid-cols-3 sm:grid-cols-6 gap-x-8 gap-y-4 text-center">
+               <div className="flex flex-col items-center gap-2">
+                 <Shield className="w-5 h-5 text-zinc-500" />
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">IDENTITY</span>
+                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">VERIFIED</span>
                </div>
-            </CardContent>
-          </Card>
-        </div>
+               <div className="flex flex-col items-center gap-2">
+                 <Users className="w-5 h-5 text-zinc-500" />
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">ACCESS</span>
+                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">ENFORCED</span>
+               </div>
+               <div className="flex flex-col items-center gap-2">
+                 <Database className="w-5 h-5 text-zinc-500" />
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">ASSET SEC</span>
+                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">GRANTED</span>
+               </div>
+               <div className="flex flex-col items-center gap-2">
+                 <Key className="w-5 h-5 text-zinc-500" />
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">KEY SEC</span>
+                 <span className="text-[10px] font-mono tracking-widest text-cyan-400">PROTECTED</span>
+               </div>
+               <div className="flex flex-col items-center gap-2">
+                 <Activity className="w-5 h-5 text-zinc-500" />
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">SENTINEL</span>
+                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">ACTIVE</span>
+               </div>
+               <div className="flex flex-col items-center gap-2">
+                 <ShieldCheck className="w-5 h-5 text-zinc-500" />
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">AUDIT</span>
+                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">VERIFIED</span>
+               </div>
+             </div>
+          </div>
+
+          <TechnicalBriefingButton />
+
+          {/* Detailed Stats */}
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Identities</CardTitle>
+                <Users className="h-4 w-4 text-emerald-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-mono text-zinc-100">{result.data?.totalUsers}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Registered Personel</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Assets</CardTitle>
+                <HardDrive className="h-4 w-4 text-emerald-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-mono text-zinc-100">{result.data?.activeAssets}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">AES-256-GCM Secured</p>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Access</CardTitle>
+                <Key className="h-4 w-4 text-cyan-400" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-mono text-zinc-100">{result.data?.pendingAccessRequests}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-2 mb-4 tracking-widest uppercase">Pending Context Check</p>
+                <div className="pt-3 border-t border-zinc-800/50">
+                  <AssignAssetButton assetId="asset-123" assigneeDid="did:test:user1" />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
+              <CardHeader className="flex flex-row items-center justify-between pb-2">
+                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Incidents</CardTitle>
+                <ShieldAlert className="h-4 w-4 text-emerald-500" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-3xl font-mono text-emerald-500">{result.data?.criticalAlerts}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Active Threats</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg flex flex-col max-h-[400px]">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-sm font-mono uppercase tracking-widest text-zinc-400 flex items-center gap-2">
+                  <ShieldCheck className="w-4 h-4 text-cyan-400" /> Tamper-Evident Audit
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 overflow-y-auto">
+                {result.data?.recentAudits && result.data.recentAudits.length > 0 ? (
+                  <div className="space-y-2">
+                    {result.data.recentAudits.map((audit: any) => (
+                      <div key={audit.id} className="flex flex-col p-3 rounded bg-zinc-900/50 border border-zinc-800/50">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] text-zinc-500 font-mono">{new Date(audit.created_at).toLocaleString()}</span>
+                          <span className="text-[10px] text-cyan-400 font-mono tracking-widest border border-cyan-500/30 px-2 py-0.5 rounded-sm">{audit.event_type}</span>
+                        </div>
+                        <div className="text-xs text-zinc-300 font-mono mb-2 truncate">Target: {audit.target_id || 'N/A'}</div>
+                        <div className="text-[10px] text-zinc-600 font-mono truncate">Hash: {audit.event_hash}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center justify-center py-12 text-zinc-600">
+                    <ShieldCheck className="h-8 w-8 mb-4 opacity-50" />
+                    <p className="text-[10px] font-mono tracking-widest uppercase">No Recent Audits</p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
+              <CardHeader className="pb-4 border-b border-zinc-800">
+                <CardTitle className="text-sm font-mono uppercase tracking-widest text-zinc-400 flex items-center gap-2">
+                  <Activity className="w-4 h-4 text-emerald-500" /> Sentinel Security Engine
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="pt-6">
+                 <div className="space-y-6">
+                   <div className="space-y-3 font-mono text-sm">
+                     <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
+                       <span className="text-zinc-500">Status</span>
+                       <span className="text-emerald-500">ACTIVE</span>
+                     </div>
+                     <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
+                       <span className="text-zinc-500">Deterministic Checks</span>
+                       <span className="text-cyan-400">5 / 5</span>
+                     </div>
+                     <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
+                       <span className="text-zinc-500">Execution Mode</span>
+                       <span className="text-zinc-300">Continuous Validation</span>
+                     </div>
+                   </div>
+
+                   <Link href="/security/sentinel" className="block w-full mt-6">
+                     <button className="w-full bg-zinc-900 hover:bg-zinc-800 text-zinc-100 border border-zinc-700 py-3 rounded text-xs font-mono uppercase tracking-widest transition-colors flex items-center justify-center gap-2">
+                       <Play className="w-4 h-4 text-emerald-500" /> Launch Security Lab
+                     </button>
+                   </Link>
+                 </div>
+              </CardContent>
+            </Card>
+          </div>
+        </>
       )}
     </div>
   );

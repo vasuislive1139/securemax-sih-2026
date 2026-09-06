@@ -48,7 +48,7 @@ export function InfrastructureHealth() {
   }, [client]);
 
   return (
-    <Card className="glass-panel border-white/5">
+    <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Server className="w-5 h-5 text-primary" /> Infrastructure Health
@@ -57,7 +57,7 @@ export function InfrastructureHealth() {
       </CardHeader>
       <CardContent className="space-y-6">
         
-        <div className="flex items-center justify-between p-3 rounded-md bg-black/40 border border-white/5">
+        <div className="flex items-center justify-between p-3 rounded-md bg-black/40 border border-zinc-800">
           <div className="flex items-center gap-3">
             <div className={`w-2 h-2 rounded-full ${isHealthy && !isError && chainId === 11155111 ? 'bg-emerald-500 animate-pulse' : 'bg-destructive animate-pulse'}`} />
             <div>
@@ -97,7 +97,7 @@ export function InfrastructureHealth() {
 function ContractStatus({ name, hasBytecode, healthy }: { name: string, hasBytecode?: boolean, healthy: boolean }) {
   const isOk = healthy && hasBytecode;
   return (
-    <div className="flex flex-col p-2 rounded bg-black/20 border border-white/5 gap-1">
+    <div className="flex flex-col p-2 rounded bg-black/20 border border-zinc-800 gap-1">
       <span className="text-[11px] font-medium text-foreground">{name}</span>
       <span className={`text-[9px] font-mono ${isOk ? 'text-emerald-500/80' : hasBytecode === false ? 'text-amber-500/80' : 'text-zinc-500/80'}`}>
         {isOk ? 'OK — BYTECODE PRESENT' : hasBytecode === false ? 'NOT DEPLOYED' : 'CHECKING...'}

@@ -12,7 +12,7 @@ export function KMSHealth() {
   const isLocked = attackPathStage === 'BLOCKED' && (activeThreat?.blockedAt === 'KMS' || activeThreat?.blockedAt === 'DOMAIN2');
   
   return (
-    <Card className={`glass-panel border-white/5 ${isLocked ? 'border-destructive/50' : ''}`}>
+    <Card className={`bg-[#0a0a0c] border-zinc-800 rounded-lg ${isLocked ? 'border-destructive/50' : ''}`}>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Key className="w-5 h-5 text-cyan-400" /> Key Management System
@@ -21,7 +21,7 @@ export function KMSHealth() {
       </CardHeader>
       <CardContent className="space-y-6">
         
-        <div className="flex items-center justify-between p-3 rounded-md bg-black/40 border border-white/5">
+        <div className="flex items-center justify-between p-3 rounded-md bg-black/40 border border-zinc-800">
           <div className="flex items-center gap-3">
             {isLocked ? (
               <Lock className="w-5 h-5 text-destructive" />

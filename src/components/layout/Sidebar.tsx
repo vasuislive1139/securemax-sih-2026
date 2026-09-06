@@ -47,9 +47,9 @@ export function Sidebar({ onNavigate, isMobile }: SidebarProps) {
   const filteredNav = navItems.filter((item) => item.roles.includes(role));
 
   return (
-    <div className={cn("flex h-full flex-col bg-card/50 backdrop-blur-xl border-r border-white/5", !isMobile && "w-64")}>
+    <div className={cn("flex h-full flex-col bg-[#0a0a0c] backdrop-blur-xl border-r border-zinc-800", !isMobile && "w-64")}>
       {!isMobile && (
-        <div className="flex h-16 items-center px-6 border-b border-white/5">
+        <div className="flex h-16 items-center px-6 border-b border-zinc-800">
           <Shield className="h-6 w-6 text-primary mr-2" />
           <span className="text-lg font-bold tracking-widest text-foreground">SECURE<span className="text-primary">MAX</span></span>
         </div>
@@ -88,8 +88,8 @@ export function Sidebar({ onNavigate, isMobile }: SidebarProps) {
         </nav>
       </div>
 
-      <div className="p-4 border-t border-white/5 bg-black/20">
-        <div className="flex items-center space-x-3 rounded-md bg-white/5 p-3 tech-border">
+      <div className="p-4 border-t border-zinc-800 bg-black/20">
+        <div className="flex items-center space-x-3 rounded-md bg-white/5 p-3 ">
           <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary/20 text-primary border border-primary/30 uppercase">
             {role.charAt(0)}
           </div>

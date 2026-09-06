@@ -1,10 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { List, Link2, ShieldCheck, Database, Search, ArrowDown } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Database, ShieldCheck, FileText, ChevronDown } from 'lucide-react';
 import { useDemoStore } from '@/stores/useDemoStore';
 
 export default function AuditTrailPage() {
@@ -12,12 +9,11 @@ export default function AuditTrailPage() {
   const [verifying, setVerifying] = React.useState(false);
   const [verified, setVerified] = React.useState(false);
 
-  // Generate dynamic audit trail based on incidents
   const baseAudit = [
-    { id: 'EVT-004', type: 'DECRYPTION_COMPLETED', actor: 'Aarav Mehta (ADMIN)', target: 'BEL-RDR-001', hash: '0x8f2a...c391', prevHash: '0xe2a4...f9d1', time: '10 mins ago', result: 'SUCCESS' },
-    { id: 'EVT-003', type: 'KMS_CAPABILITY_ISSUED', actor: 'SYSTEM_KMS', target: 'BEL-RDR-001', hash: '0xe2a4...f9d1', prevHash: '0x7b2c...a11e', time: '11 mins ago', result: 'SUCCESS' },
-    { id: 'EVT-002', type: 'DOMAIN_2_AUTH_CHECK', actor: '0x222...222', target: 'BEL-RDR-001', hash: '0x7b2c...a11e', prevHash: '0x4f92...c88d', time: '12 mins ago', result: 'SUCCESS' },
-    { id: 'EVT-001', type: 'DOMAIN_1_AUTH_CHECK', actor: '0x333...333', target: 'BEL-RDR-001', hash: '0x4f92...c88d', prevHash: '0x0000...0000', time: '12 mins ago', result: 'SUCCESS' },
+    { id: 'EVT-004', type: 'DECRYPTION_COMPLETED', actor: 'Aarav Mehta (ADMIN)', target: 'BEL-RDR-001', hash: '0x8f2a...c391', prevHash: '0xe2a4...f9d1', time: '10:04:12', result: 'SUCCESS' },
+    { id: 'EVT-003', type: 'KMS_CAPABILITY_ISSUED', actor: 'SYSTEM_KMS', target: 'BEL-RDR-001', hash: '0xe2a4...f9d1', prevHash: '0x7b2c...a11e', time: '10:04:11', result: 'SUCCESS' },
+    { id: 'EVT-002', type: 'DOMAIN_2_AUTH_CHECK', actor: '0x222...222', target: 'BEL-RDR-001', hash: '0x7b2c...a11e', prevHash: '0x4f92...c88d', time: '10:04:09', result: 'SUCCESS' },
+    { id: 'EVT-001', type: 'DOMAIN_1_AUTH_CHECK', actor: '0x333...333', target: 'BEL-RDR-001', hash: '0x4f92...c88d', prevHash: '0x0000...0000', time: '10:04:08', result: 'SUCCESS' },
   ];
 
   let displayAudit = [...baseAudit];
@@ -25,9 +21,9 @@ export default function AuditTrailPage() {
   if (incidents.length > 0) {
     const inc = incidents[0];
     const demoEvents = [
-      { id: 'EVT-007', type: 'SECURITY_INCIDENT_CREATED', actor: 'SENTINEL', target: inc.affectedAsset, hash: '0x99ff...11aa', prevHash: '0x55bb...22cc', time: 'Just now', result: 'SUCCESS' },
-      { id: 'EVT-006', type: 'DECRYPTION_DENIED', actor: 'SYSTEM_KMS', target: inc.affectedAsset, hash: '0x55bb...22cc', prevHash: '0x11aa...99ff', time: 'Just now', result: 'DENIED' },
-      { id: 'EVT-005', type: 'DOMAIN_2_AUTH_CHECK', actor: 'UNKNOWN (SANDBOX)', target: inc.affectedAsset, hash: '0x11aa...99ff', prevHash: '0x8f2a...c391', time: 'Just now', result: 'DENIED (POLICY VIOLATION)' },
+      { id: 'EVT-007', type: 'SECURITY_INCIDENT_CREATED', actor: 'SENTINEL', target: inc.affectedAsset, hash: '0x99ff...11aa', prevHash: '0x55bb...22cc', time: '10:14:24', result: 'SUCCESS' },
+      { id: 'EVT-006', type: 'DECRYPTION_DENIED', actor: 'SYSTEM_KMS', target: inc.affectedAsset, hash: '0x55bb...22cc', prevHash: '0x11aa...99ff', time: '10:14:23', result: 'DENIED' },
+      { id: 'EVT-005', type: 'DOMAIN_2_AUTH_CHECK', actor: 'UNKNOWN (SANDBOX)', target: inc.affectedAsset, hash: '0x11aa...99ff', prevHash: '0x8f2a...c391', time: '10:14:22', result: 'DENIED' },
     ];
     displayAudit = [...demoEvents, ...baseAudit];
   }
@@ -42,104 +38,78 @@ export default function AuditTrailPage() {
   };
 
   return (
-    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
+    <div className="space-y-6 font-sans selection:bg-cyan-500/30 pb-12">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground flex items-center">
-            <List className="mr-3 h-8 w-8 text-primary" />
-            Tamper-Evident Audit Trail
+          <h2 className="text-3xl font-bold tracking-tight text-zinc-100 uppercase flex items-center gap-3">
+            <FileText className="h-6 w-6 text-emerald-500" />
+            Audit & Forensics
           </h2>
-          <p className="text-muted-foreground mt-1">Blockchain-Anchored Forensics Log</p>
+          <p className="text-sm text-zinc-500 font-mono tracking-widest mt-1 uppercase">Tamper-Evident Event Ledger</p>
         </div>
-        <Button 
-          variant={verified ? "outline" : "default"} 
-          className={`mt-4 sm:mt-0 font-mono ${verified ? 'border-emerald-500 text-emerald-400' : ''}`}
+        <button 
           onClick={handleVerify}
           disabled={verifying}
+          className={`mt-4 sm:mt-0 font-mono text-xs tracking-widest uppercase px-6 py-3 rounded flex items-center transition-colors ${verified ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-zinc-100 text-zinc-950 hover:bg-white'}`}
         >
           {verifying ? (
             <><Database className="mr-2 h-4 w-4 animate-bounce" /> VERIFYING BLOCKCHAIN...</>
           ) : verified ? (
             <><ShieldCheck className="mr-2 h-4 w-4" /> INTEGRITY VERIFIED</>
           ) : (
-            <><Database className="mr-2 h-4 w-4" /> VERIFY INTEGRITY</>
+            <><Database className="mr-2 h-4 w-4" /> VERIFY CHAIN INTEGRITY</>
           )}
-        </Button>
+        </button>
       </div>
 
-      <div className="bg-primary/5 border border-primary/20 rounded-md p-3 text-center">
-        <p className="text-xs font-mono text-primary/80">CRYPTOGRAPHIC HASH CHAIN VISUALIZATION</p>
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        
-        {/* Chain Visualization */}
-        <div className="lg:col-span-1 space-y-2 relative">
-          <div className="absolute left-6 top-8 bottom-8 w-1 bg-border/50 rounded-full" />
-          {displayAudit.map((log, idx) => (
-            <Card key={log.id} className={`glass-panel border-white/5 relative z-10 ${verified ? 'border-emerald-500/30 bg-emerald-500/5' : ''}`}>
-              <CardContent className="p-4 flex items-start gap-4">
-                 <div className={`w-4 h-4 rounded-full mt-1 shrink-0 ${verified ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]' : 'bg-muted-foreground'}`} />
-                 <div className="space-y-2 w-full">
-                   <div className="flex justify-between items-center">
-                     <span className="font-mono text-xs font-bold">{log.id}</span>
-                     <span className="text-[10px] text-muted-foreground">{log.time}</span>
-                   </div>
-                   <div className="bg-black/40 p-2 rounded border border-white/5 text-[10px] font-mono space-y-1">
-                     <div className="flex justify-between">
-                       <span className="text-muted-foreground">HASH:</span>
-                       <span className={verified ? 'text-emerald-400' : 'text-foreground'}>{log.hash}</span>
-                     </div>
-                     <div className="flex justify-between">
-                       <span className="text-muted-foreground">PREV:</span>
-                       <span className="text-muted-foreground/70">{log.prevHash}</span>
-                     </div>
-                   </div>
-                 </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Detailed Table */}
-        <Card className="glass-panel border-white/5 lg:col-span-2">
-          <CardHeader>
-            <CardTitle>Forensic Event Details</CardTitle>
-            <CardDescription>Decoded payload data from anchored events.</CardDescription>
-          </CardHeader>
-          <CardContent className="p-0">
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm text-left">
-                <thead className="bg-muted/30 text-muted-foreground text-xs uppercase border-b border-border">
-                  <tr>
-                    <th className="px-6 py-3 font-medium">Event ID</th>
-                    <th className="px-6 py-3 font-medium">Action</th>
-                    <th className="px-6 py-3 font-medium">Actor</th>
-                    <th className="px-6 py-3 font-medium">Resource</th>
-                    <th className="px-6 py-3 font-medium">Result</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {displayAudit.map((log) => (
-                    <tr key={log.id} className="hover:bg-accent/30 transition-colors">
-                      <td className="px-6 py-4 font-mono text-xs">{log.id}</td>
-                      <td className="px-6 py-4">
-                        <span className="font-semibold text-foreground text-xs">{log.type}</span>
-                      </td>
-                      <td className="px-6 py-4 font-mono text-xs text-muted-foreground">{log.actor}</td>
-                      <td className="px-6 py-4 font-mono text-xs">{log.target}</td>
-                      <td className="px-6 py-4">
-                        <Badge variant="outline" className={`text-[10px] ${log.result.includes('SUCCESS') ? 'text-emerald-400 border-emerald-500/30 bg-emerald-500/10' : 'text-destructive border-destructive/30 bg-destructive/10'}`}>
-                          {log.result}
-                        </Badge>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+      <div className="space-y-6">
+        {displayAudit.map((log) => (
+          <div key={log.id} className="bg-[#0a0a0c] border border-zinc-800 rounded-lg overflow-hidden">
+            <div className="bg-zinc-900/50 p-4 border-b border-zinc-800 flex justify-between items-center cursor-pointer">
+              <div className="flex items-center gap-6">
+                <div className="w-16 text-[10px] font-mono text-zinc-500">{log.time}</div>
+                <div className="text-xs font-bold tracking-widest text-zinc-100 uppercase">{log.type}</div>
+                <div className={`text-[10px] font-mono tracking-widest px-3 py-1 rounded ${log.result === 'SUCCESS' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
+                  {log.result}
+                </div>
+              </div>
+              <ChevronDown className="w-4 h-4 text-zinc-500" />
             </div>
-          </CardContent>
-        </Card>
+
+            <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+               {/* AUDIT EVENT */}
+               <div className="space-y-4">
+                 <h4 className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase pb-2 border-b border-zinc-800">Audit Event</h4>
+                 <div className="space-y-2 text-xs font-mono">
+                   <div className="flex justify-between"><span className="text-zinc-600">EVENT ID</span><span className="text-zinc-300">{log.id}</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">ACTOR</span><span className="text-zinc-300 truncate max-w-[120px]">{log.actor}</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">ACTION</span><span className="text-zinc-300 truncate max-w-[120px]">{log.type}</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">ASSET</span><span className="text-cyan-400">{log.target}</span></div>
+                 </div>
+               </div>
+
+               {/* INTEGRITY */}
+               <div className="space-y-4">
+                 <h4 className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase pb-2 border-b border-zinc-800">Integrity</h4>
+                 <div className="space-y-2 text-xs font-mono">
+                   <div className="flex justify-between"><span className="text-zinc-600">EVENT HASH</span><span className="text-zinc-400">{log.hash}</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">PREV HASH</span><span className="text-zinc-600">{log.prevHash}</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">VERIFICATION</span><span className={verified ? 'text-emerald-500' : 'text-zinc-500'}>{verified ? '✓ PASSED' : 'PENDING'}</span></div>
+                 </div>
+               </div>
+
+               {/* BLOCKCHAIN ANCHOR */}
+               <div className="space-y-4">
+                 <h4 className="text-[10px] font-mono tracking-widest text-zinc-500 uppercase pb-2 border-b border-zinc-800">Blockchain Anchor</h4>
+                 <div className="space-y-2 text-xs font-mono">
+                   <div className="flex justify-between"><span className="text-zinc-600">NETWORK</span><span className="text-cyan-400">SEPOLIA</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">STATUS</span><span className="text-emerald-500">TAMPER-EVIDENT</span></div>
+                   <div className="flex justify-between"><span className="text-zinc-600">REFERENCE</span><span className="text-zinc-500 underline decoration-zinc-800 underline-offset-4">0x4b7...9e2</span></div>
+                 </div>
+               </div>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

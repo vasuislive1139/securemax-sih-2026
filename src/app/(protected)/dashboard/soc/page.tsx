@@ -55,51 +55,51 @@ export default function SOCDashboard() {
 
       {/* Top Metrics Row */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className={`glass-panel ${isHealthy ? 'tech-border' : 'border-destructive/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]'}`}>
+        <Card className={`bg-[#0a0a0c] border-zinc-800 rounded-lg ${isHealthy ? '' : 'border-red-500/50 '}`}>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Security Posture</CardTitle>
+            <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Security Posture</CardTitle>
             {postureScore >= 90 ? <ShieldCheck className="h-4 w-4 text-emerald-500" /> : <ShieldAlert className="h-4 w-4 text-destructive" />}
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold font-mono ${postureScore >= 90 ? 'text-emerald-500' : 'text-destructive'}`}>
+            <div className={`text-3xl font-mono text-zinc-100 ${postureScore >= 90 ? 'text-emerald-500' : 'text-destructive'}`}>
               {postureScore}/100
             </div>
-            <p className="text-xs text-muted-foreground mt-1">Real-time aggregate score</p>
+            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Real-time aggregate score</p>
           </CardContent>
         </Card>
         
-        <Card className="glass-panel tech-border">
+        <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Open Incidents</CardTitle>
+            <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Open Incidents</CardTitle>
             <AlertTriangle className={`h-4 w-4 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-muted-foreground'}`} />
           </CardHeader>
           <CardContent>
-            <div className={`text-2xl font-bold font-mono ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-foreground'}`}>
+            <div className={`text-3xl font-mono text-zinc-100 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-foreground'}`}>
               {openIncidentsCount}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">Active investigations</p>
+            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Active investigations</p>
           </CardContent>
         </Card>
 
-        <Card className="glass-panel tech-border">
+        <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Sentinel Health</CardTitle>
+            <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Sentinel Health</CardTitle>
             <Activity className="h-4 w-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-primary glow-cyan">ACTIVE</div>
-            <p className="text-xs text-muted-foreground mt-1">5/5 DETERMINISTIC CHECKS</p>
+            <div className="text-3xl font-mono text-zinc-100 text-primary ">ACTIVE</div>
+            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">5/5 DETERMINISTIC CHECKS</p>
           </CardContent>
         </Card>
 
-        <Card className="glass-panel tech-border">
+        <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Active Sessions</CardTitle>
+            <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Active Sessions</CardTitle>
             <Lock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold font-mono text-foreground">3</div>
-            <p className="text-xs text-muted-foreground mt-1">Temporary Decryption</p>
+            <div className="text-3xl font-mono text-zinc-100 text-foreground">3</div>
+            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Temporary Decryption</p>
           </CardContent>
         </Card>
       </div>
@@ -112,7 +112,7 @@ export default function SOCDashboard() {
       <AttackPathVisualization />
 
       {activeThreat && (
-        <Card className="glass-panel border-destructive/50 bg-destructive/10 animate-pulse-border">
+        <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  border-destructive/50 bg-destructive/10 animate-pulse-border">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-destructive">
                <ShieldAlert className="w-5 h-5" /> ACTIVE SECURITY EVENT

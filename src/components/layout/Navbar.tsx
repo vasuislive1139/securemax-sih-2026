@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export function Navbar() {
   return (
-    <header className="flex h-16 items-center justify-between border-b border-border bg-card/50 px-6 backdrop-blur-xl">
+    <header className="flex h-16 items-center justify-between border-b border-border bg-[#0a0a0c] px-6 backdrop-blur-xl">
       <div className="flex items-center lg:hidden">
         <Button variant="ghost" size="icon" className="mr-2">
           <Menu className="h-5 w-5" />

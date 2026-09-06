@@ -29,7 +29,7 @@ export default function AssetsPage() {
         </Button>
       </div>
 
-      <Card className="glass-panel">
+      <Card className="">
         <CardHeader className="pb-3">
           <div className="flex items-center space-x-2">
             <div className="relative flex-1 max-w-sm">
