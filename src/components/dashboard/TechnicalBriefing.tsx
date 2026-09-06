@@ -114,11 +114,44 @@ export function TechnicalBriefing({ onClose }: { onClose: () => void }) {
                 </div>
               )}
 
-              {activeIdx > 1 && activeIdx < 9 && (
-                <div className="bg-[#0a0a0c] border border-zinc-800 rounded-lg p-10 min-h-[300px] flex items-center justify-center">
-                  <p className="text-zinc-500 font-mono text-sm uppercase tracking-widest">
-                    {SECTIONS[activeIdx]} documentation loaded.
-                  </p>
+              {activeIdx === 2 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>SecureMax relies on cryptographic wallet-backed identities rather than legacy usernames and passwords.</p>
+                  <p className="text-cyan-400">Please navigate to the IDENTITY page in the main application menu to view the live registered identities and their cryptographic verification status.</p>
+                </div>
+              )}
+              {activeIdx === 3 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>Domain 1 manages Asset Authorization via Role-Based Access Control (RBAC) enforced via smart contracts.</p>
+                  <p className="text-cyan-400">Navigate to the ASSETS page to interact with the Domain 1 enforcement registry.</p>
+                </div>
+              )}
+              {activeIdx === 4 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>Domain 2 manages Cryptographic Key Authorization. It verifies contextual parameters before releasing the KMS decryption token.</p>
+                  <p className="text-cyan-400">View live Domain 2 access flows in the SOC dashboard.</p>
+                </div>
+              )}
+              {activeIdx === 5 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>The Key Management System (KMS) uses AES-256-GCM to orchestrate the final decryption phase after both Domain 1 and Domain 2 have independently verified access.</p>
+                </div>
+              )}
+              {activeIdx === 6 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>Protected Data remains encrypted at rest and in transit. It is only decrypted in memory on the client side after a successful KMS token grant.</p>
+                </div>
+              )}
+              {activeIdx === 7 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>Sentinel is the deterministic security engine that continuously monitors for authorization bypasses, privilege escalation, and token replay attacks.</p>
+                  <p className="text-emerald-500">Navigate to the SENTINEL page to view live security enforcement checks.</p>
+                </div>
+              )}
+              {activeIdx === 8 && (
+                <div className="space-y-6 text-zinc-400 font-mono text-sm max-w-3xl">
+                  <p>The Tamper-Evident Audit system anchors critical access decisions to the blockchain, ensuring a verifiable and immutable forensic trail.</p>
+                  <p className="text-emerald-500">Navigate to the AUDIT page in the main application menu to view the actual live forensic ledger.</p>
                 </div>
               )}
             </motion.div>

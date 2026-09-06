@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 
 const navItems = [
   { name: 'SOC', href: '/dashboard/soc', roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
+  { name: 'IDENTITY', href: '/identity', roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST, UserRole.MANAGER] },
   { name: 'SENTINEL', href: '/security/sentinel', roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
   { name: 'INCIDENTS', href: '/security/incidents', roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
   { name: 'AUDIT', href: '/audit', roles: [UserRole.ADMIN, UserRole.AUDITOR, UserRole.SECURITY_ANALYST] },
