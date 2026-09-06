@@ -13,6 +13,7 @@ export default function SecurityCenterPage() {
   const [scanning, setScanning] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [data, setData] = useState<{ scans: any[]; findings: any[]; incidents: any[] }>({ scans: [], findings: [], incidents: [] });
+  const [sessionRole, setSessionRole] = useState('LOADING...');
 
   const loadData = async () => {
     setLoading(true);
@@ -27,6 +28,17 @@ export default function SecurityCenterPage() {
   };
 
   useEffect(() => {
+    fetch('/api/auth/session')
+      .then(res => res.json())
+      .then(authData => {
+        if (authData?.session?.role) {
+          setSessionRole(authData.session.role);
+        } else {
+          setSessionRole('UNKNOWN');
+        }
+      })
+      .catch(() => setSessionRole('UNKNOWN'));
+
     loadData();
   }, []);
 
@@ -65,7 +77,7 @@ export default function SecurityCenterPage() {
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 sm:mt-0">
           <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 px-4 py-1.5 font-mono">
-            ROLE: SECURITY_ANALYST
+            ROLE: {sessionRole}
           </Badge>
           <Button onClick={handleRunScan} disabled={scanning} className="bg-primary hover:bg-primary/90 text-primary-foreground font-mono">
             {scanning ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Play className="mr-2 h-4 w-4 fill-current" />}

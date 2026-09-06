@@ -19,7 +19,7 @@ export interface Incident {
   threatId: string;
   title: string;
   severity: string;
-  status: 'OPEN' | 'INVESTIGATING' | 'CONTAINED' | 'RESOLVED';
+  status: 'OPEN' | 'INVESTIGATING' | 'CONTAINED' | 'THREAT CONTAINED';
   createdAt: Date;
   detectionLayer: string;
   blockedLayer: string;
@@ -91,7 +91,7 @@ export const useDemoStore = create<DemoState>((set, get) => ({
 
   resolveIncident: (id) => {
     set((state) => ({
-      incidents: state.incidents.map(i => i.id === id ? { ...i, status: 'RESOLVED' } : i),
+      incidents: state.incidents.map(i => i.id === id ? { ...i, status: 'THREAT CONTAINED' } : i),
       systemState: 'RECOVERED',
       activeThreat: null,
       attackPathStage: 'IDLE'

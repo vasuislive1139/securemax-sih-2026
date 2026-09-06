@@ -12,9 +12,23 @@ import { AttackPathVisualization } from '@/components/security/AttackPathVisuali
 
 export default function SOCDashboard() {
   const { systemState, postureScore, incidents, activeThreat } = useDemoStore();
+  const [sessionRole, setSessionRole] = React.useState('LOADING...');
+
+  React.useEffect(() => {
+    fetch('/api/auth/session')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.session?.role) {
+          setSessionRole(data.session.role);
+        } else {
+          setSessionRole('UNKNOWN');
+        }
+      })
+      .catch(() => setSessionRole('UNKNOWN'));
+  }, []);
 
   const isHealthy = systemState === 'NORMAL' || systemState === 'RECOVERED';
-  const openIncidentsCount = incidents.filter(i => i.status !== 'RESOLVED').length;
+  const openIncidentsCount = incidents.filter(i => i.status !== 'THREAT CONTAINED').length;
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
@@ -30,7 +44,7 @@ export default function SOCDashboard() {
             SYSTEM STATE: {systemState}
           </Badge>
           <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 px-4 py-1.5 font-mono">
-            ROLE: SECURITY_ANALYST
+            ROLE: {sessionRole}
           </Badge>
         </div>
       </div>
@@ -74,7 +88,7 @@ export default function SOCDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold font-mono text-primary glow-cyan">ACTIVE</div>
-            <p className="text-xs text-muted-foreground mt-1">5/5 Deterministic checks</p>
+            <p className="text-xs text-muted-foreground mt-1">5/5 DETERMINISTIC CHECKS</p>
           </CardContent>
         </Card>
 

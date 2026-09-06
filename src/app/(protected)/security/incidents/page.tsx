@@ -48,7 +48,7 @@ export default function IncidentsPage() {
                 
                 {incident.status === 'OPEN' && (
                   <Button onClick={() => resolveIncident(incident.id)} variant="outline" className="border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/10">
-                     <ShieldCheck className="w-4 h-4 mr-2" /> RESOLVE & RECOVER
+                     <ShieldCheck className="w-4 h-4 mr-2" /> CONTAIN THREAT & RECOVER
                   </Button>
                 )}
               </CardHeader>
@@ -94,7 +94,7 @@ export default function IncidentsPage() {
                           <div className="w-2 h-2 rounded-full bg-primary" />
                           <span className="text-xs font-mono text-primary">AUDIT RECORDED</span>
                         </div>
-                        {incident.status === 'RESOLVED' && (
+                        {incident.status === 'THREAT CONTAINED' && (
                           <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-emerald-500" />
                             <span className="text-xs font-mono text-emerald-400">CONTAINMENT & RECOVERY COMPLETE</span>

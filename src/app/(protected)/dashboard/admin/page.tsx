@@ -6,6 +6,7 @@ import { getDashboardMetrics } from '@/app/actions/dashboard';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AssignAssetButton } from '@/components/ui/AssignAssetButton';
+import { TechnicalBriefingButton } from '@/components/dashboard/TechnicalBriefingButton';
 
 export default async function AdminDashboardPage() {
   const result = await getDashboardMetrics();
@@ -153,7 +154,7 @@ export default async function AdminDashboardPage() {
                    </div>
                    <div className="flex justify-between text-sm mb-1">
                      <span className="text-muted-foreground">Test Suites</span>
-                     <span className="font-mono text-primary">15</span>
+                     <span className="font-mono text-primary">5</span>
                    </div>
                    <div className="flex justify-between text-sm">
                      <span className="text-muted-foreground">Execution Mode</span>

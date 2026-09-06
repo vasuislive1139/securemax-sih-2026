@@ -23,10 +23,16 @@ export function InfrastructureHealth() {
   const { data: blockNumber, isError } = useBlockNumber({ watch: true });
   const client = usePublicClient();
   const [bytecodeStatus, setBytecodeStatus] = useState<Record<string, boolean>>({});
+  const chainId = client?.chain?.id;
 
   useEffect(() => {
     if (!client) return;
     const checkBytecode = async () => {
+      // Only verify if we are correctly targeting Sepolia (Chain ID 11155111)
+      if (client.chain?.id !== 11155111) {
+        setBytecodeStatus({});
+        return;
+      }
       const statuses: Record<string, boolean> = {};
       for (const [name, address] of Object.entries(CONTRACTS)) {
         try {
@@ -53,19 +59,19 @@ export function InfrastructureHealth() {
         
         <div className="flex items-center justify-between p-3 rounded-md bg-black/40 border border-white/5">
           <div className="flex items-center gap-3">
-            <div className={`w-2 h-2 rounded-full ${isHealthy && !isError ? 'bg-emerald-500 animate-pulse' : 'bg-destructive animate-pulse'}`} />
+            <div className={`w-2 h-2 rounded-full ${isHealthy && !isError && chainId === 11155111 ? 'bg-emerald-500 animate-pulse' : 'bg-destructive animate-pulse'}`} />
             <div>
               <p className="text-sm font-medium leading-none">Ethereum Sepolia</p>
-              <p className="text-xs text-muted-foreground mt-1">Chain ID: 11155111 {blockNumber && `• Block: ${blockNumber}`}</p>
+              <p className="text-xs text-muted-foreground mt-1">Chain ID: {chainId || 'UNKNOWN'} {blockNumber && `• Block: ${blockNumber}`}</p>
             </div>
           </div>
-          <Badge variant="outline" className={`font-mono text-[10px] ${isHealthy && !isError ? 'text-emerald-400 border-emerald-500/30' : 'text-destructive border-destructive/30'}`}>
-            {isHealthy && !isError ? 'RPC ACTIVE' : 'DEGRADED'}
+          <Badge variant="outline" className={`font-mono text-[10px] ${isHealthy && !isError && chainId === 11155111 ? 'text-emerald-400 border-emerald-500/30' : 'text-destructive border-destructive/30'}`}>
+            {isHealthy && !isError && chainId === 11155111 ? 'RPC ACTIVE' : 'WRONG NETWORK'}
           </Badge>
         </div>
 
         <div className="space-y-3">
-          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">DOMAIN 1: Identity & Asset Policy</h4>
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">DOMAIN 1: IDENTITY & ASSET POLICY</h4>
           <div className="grid grid-cols-2 gap-2">
             <ContractStatus name="IdentityRegistry" hasBytecode={bytecodeStatus['IdentityRegistry']} healthy={isHealthy} />
             <ContractStatus name="RBACManager" hasBytecode={bytecodeStatus['RBACManager']} healthy={isHealthy} />
@@ -75,7 +81,7 @@ export function InfrastructureHealth() {
         </div>
 
         <div className="space-y-3">
-          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">DOMAIN 2: Key & Decryption Policy</h4>
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">DOMAIN 2: KEY & DECRYPTION POLICY</h4>
           <div className="grid grid-cols-2 gap-2">
             <ContractStatus name="KeyPolicyManager" hasBytecode={bytecodeStatus['KeyPolicyManager']} healthy={isHealthy} />
             <ContractStatus name="KeyLifecycle" hasBytecode={bytecodeStatus['KeyLifecycle']} healthy={isHealthy} />
@@ -94,7 +100,7 @@ function ContractStatus({ name, hasBytecode, healthy }: { name: string, hasBytec
     <div className="flex flex-col p-2 rounded bg-black/20 border border-white/5 gap-1">
       <span className="text-[11px] font-medium text-foreground">{name}</span>
       <span className={`text-[9px] font-mono ${isOk ? 'text-emerald-500/80' : hasBytecode === false ? 'text-amber-500/80' : 'text-zinc-500/80'}`}>
-        {isOk ? 'OK - BYTECODE PRESENT' : hasBytecode === false ? 'NOT DEPLOYED' : 'CHECKING...'}
+        {isOk ? 'OK — BYTECODE PRESENT' : hasBytecode === false ? 'NOT DEPLOYED' : 'CHECKING...'}
       </span>
     </div>
   );

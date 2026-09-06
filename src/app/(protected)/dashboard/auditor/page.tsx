@@ -38,7 +38,7 @@ export default async function AuditorDashboardPage() {
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
             <div>
               <CardTitle>System Events</CardTitle>
-              <CardDescription>Chain-1 synchronized chronological log</CardDescription>
+              <CardDescription>Domain 1 synchronized chronological log</CardDescription>
             </div>
             <div className="flex items-center gap-2 w-full sm:w-auto">
               <div className="relative w-full sm:w-64">

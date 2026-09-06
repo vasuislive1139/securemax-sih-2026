@@ -55,14 +55,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                 </span>
-                CHAIN-1 ACTIVE
+                DOMAIN 1 ACTIVE
               </div>
               <div className="flex items-center text-primary">
                 <span className="relative flex h-2 w-2 mr-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                 </span>
-                CHAIN-2 ACTIVE
+                DOMAIN 2 ACTIVE
               </div>
             </div>
 

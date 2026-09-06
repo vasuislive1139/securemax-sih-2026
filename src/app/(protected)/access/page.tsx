@@ -18,7 +18,7 @@ export default function AccessRequestsPage() {
     <div className="space-y-6">
       <div>
         <h2 className="text-3xl font-bold tracking-tight text-foreground">Access Requests</h2>
-        <p className="text-muted-foreground">Manage authorization to decryption keys (Chain-2).</p>
+        <p className="text-muted-foreground">Manage authorization to decryption keys (Domain 2).</p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">

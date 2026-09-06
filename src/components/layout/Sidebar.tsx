@@ -26,7 +26,23 @@ interface SidebarProps {
 
 export function Sidebar({ onNavigate, isMobile }: SidebarProps) {
   const pathname = usePathname();
-  const { role } = useUser();
+  
+  const [role, setRole] = React.useState<UserRole>(UserRole.ENGINEER);
+  const [roleName, setRoleName] = React.useState('Platform User');
+
+  React.useEffect(() => {
+    fetch('/api/auth/session')
+      .then(res => res.json())
+      .then(data => {
+        if (data?.session?.role) {
+          setRole(data.session.role);
+          if (data.session.role === 'ADMIN') setRoleName('System Admin');
+          else if (data.session.role === 'AUDITOR') setRoleName('System Auditor');
+          else if (data.session.role === 'SECURITY_ANALYST') setRoleName('Security Analyst');
+        }
+      })
+      .catch(console.error);
+  }, []);
 
   const filteredNav = navItems.filter((item) => item.roles.includes(role));
 
@@ -35,7 +51,7 @@ export function Sidebar({ onNavigate, isMobile }: SidebarProps) {
       {!isMobile && (
         <div className="flex h-16 items-center px-6 border-b border-white/5">
           <Shield className="h-6 w-6 text-primary mr-2" />
-          <span className="text-lg font-bold tracking-widest text-foreground">SECURE<span className="text-primary">MESH</span></span>
+          <span className="text-lg font-bold tracking-widest text-foreground">SECURE<span className="text-primary">MAX</span></span>
         </div>
       )}
       
@@ -74,11 +90,11 @@ export function Sidebar({ onNavigate, isMobile }: SidebarProps) {
 
       <div className="p-4 border-t border-white/5 bg-black/20">
         <div className="flex items-center space-x-3 rounded-md bg-white/5 p-3 tech-border">
-          <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary/20 text-primary border border-primary/30">
+          <div className="flex h-9 w-9 items-center justify-center rounded-sm bg-primary/20 text-primary border border-primary/30 uppercase">
             {role.charAt(0)}
           </div>
           <div className="flex flex-col">
-            <span className="text-sm font-medium text-foreground">System Admin</span>
+            <span className="text-sm font-medium text-foreground">{roleName}</span>
             <span className="text-[10px] text-primary font-mono tracking-wider">{role}</span>
           </div>
         </div>
