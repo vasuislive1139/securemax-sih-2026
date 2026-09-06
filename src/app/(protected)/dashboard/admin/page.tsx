@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Shield, Users, HardDrive, Key, AlertCircle, ShieldAlert, Activity, ShieldCheck, Play, Hexagon, Database, Lock } from 'lucide-react';
 import Link from 'next/link';
 import { TechnicalBriefingButton } from '@/components/dashboard/TechnicalBriefingButton';
-import { AssignAssetButton } from '@/components/ui/AssignAssetButton';
+import { ClientIncidentsCard } from '@/components/dashboard/ClientIncidentsCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -93,63 +93,51 @@ export default async function AdminDashboard() {
           <TechnicalBriefingButton />
 
           {/* Detailed Stats */}
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
             <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardHeader className="flex flex-row items-center justify-between pb-2 pt-4 px-4">
                 <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Identities</CardTitle>
                 <Users className="h-4 w-4 text-emerald-500" />
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-mono text-zinc-100">{result.data?.totalUsers}</div>
-                <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Registered Personel</p>
+              <CardContent className="px-4 pb-4">
+                <div className="text-2xl font-mono text-zinc-100">{result.data?.totalUsers}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">Registered Personnel</p>
               </CardContent>
             </Card>
             
             <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardHeader className="flex flex-row items-center justify-between pb-2 pt-4 px-4">
                 <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Assets</CardTitle>
                 <HardDrive className="h-4 w-4 text-emerald-500" />
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-mono text-zinc-100">{result.data?.activeAssets}</div>
-                <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">AES-256-GCM Secured</p>
+              <CardContent className="px-4 pb-4">
+                <div className="text-2xl font-mono text-zinc-100">{result.data?.activeAssets}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">AES-256-GCM Secured</p>
               </CardContent>
             </Card>
             
             <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardHeader className="flex flex-row items-center justify-between pb-2 pt-4 px-4">
                 <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Access</CardTitle>
                 <Key className="h-4 w-4 text-cyan-400" />
               </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-mono text-zinc-100">{result.data?.pendingAccessRequests}</div>
-                <p className="text-[10px] font-mono text-zinc-500 mt-2 mb-4 tracking-widest uppercase">Pending Context Check</p>
-                <div className="pt-3 border-t border-zinc-800/50">
-                  <AssignAssetButton assetId="asset-123" assigneeDid="did:test:user1" />
-                </div>
+              <CardContent className="px-4 pb-4">
+                <div className="text-2xl font-mono text-zinc-100">{result.data?.pendingAccessRequests}</div>
+                <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">Authorization Requests</p>
               </CardContent>
             </Card>
 
-            <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg">
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
-                <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Incidents</CardTitle>
-                <ShieldAlert className="h-4 w-4 text-emerald-500" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-mono text-emerald-500">{result.data?.criticalAlerts}</div>
-                <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Active Threats</p>
-              </CardContent>
-            </Card>
+            <ClientIncidentsCard />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
             <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg flex flex-col max-h-[400px]">
-              <CardHeader className="pb-4">
+              <CardHeader className="pb-4 pt-4">
                 <CardTitle className="text-sm font-mono uppercase tracking-widest text-zinc-400 flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-cyan-400" /> Tamper-Evident Audit
                 </CardTitle>
               </CardHeader>
-              <CardContent className="flex-1 overflow-y-auto">
+              <CardContent className="flex-1 overflow-y-auto px-4 pb-4">
                 {result.data?.recentAudits && result.data.recentAudits.length > 0 ? (
                   <div className="space-y-2">
                     {result.data.recentAudits.map((audit: any) => (
@@ -164,9 +152,9 @@ export default async function AdminDashboard() {
                     ))}
                   </div>
                 ) : (
-                  <div className="flex flex-col items-center justify-center py-12 text-zinc-600">
-                    <ShieldCheck className="h-8 w-8 mb-4 opacity-50" />
-                    <p className="text-[10px] font-mono tracking-widest uppercase">No Recent Audits</p>
+                  <div className="flex items-center gap-3 p-3 bg-zinc-900/30 border border-zinc-800/30 rounded text-zinc-600">
+                    <ShieldCheck className="h-4 w-4 opacity-50" />
+                    <span className="text-[10px] font-mono tracking-widest uppercase">NO RECENT AUDIT EVENTS</span>
                   </div>
                 )}
               </CardContent>

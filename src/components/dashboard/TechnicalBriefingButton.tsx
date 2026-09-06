@@ -25,7 +25,7 @@ export function TechnicalBriefingButton() {
           onClick={() => setIsOpen(true)}
           className="bg-zinc-100 hover:bg-white text-zinc-950 font-mono tracking-widest text-[10px] uppercase font-bold px-6 py-3 rounded flex items-center gap-2 shrink-0 transition-colors"
         >
-          OPEN TECHNICAL EXPLORER <ChevronRight className="w-4 h-4" />
+          VIEW HOW SECUREMAX WORKS → <ChevronRight className="w-4 h-4" />
         </button>
       </div>
       

@@ -36,7 +36,7 @@ export default function SOCDashboard() {
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-foreground">Security Operations Center</h2>
+          <h2 className="text-2xl font-bold tracking-tight text-foreground">Security Operations Center</h2>
           <p className="text-muted-foreground mt-1">Bharat Electronics Secure Systems - Demonstration Environment</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 sm:mt-0">
@@ -56,50 +56,50 @@ export default function SOCDashboard() {
       {/* Top Metrics Row */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card className={`bg-[#0a0a0c] border-zinc-800 rounded-lg ${isHealthy ? '' : 'border-red-500/50 '}`}>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4 px-4">
             <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Security Posture</CardTitle>
             {postureScore >= 90 ? <ShieldCheck className="h-4 w-4 text-emerald-500" /> : <ShieldAlert className="h-4 w-4 text-destructive" />}
           </CardHeader>
-          <CardContent>
-            <div className={`text-3xl font-mono text-zinc-100 ${postureScore >= 90 ? 'text-emerald-500' : 'text-destructive'}`}>
+          <CardContent className="px-4 pb-4">
+            <div className={`text-2xl font-mono text-zinc-100 ${postureScore >= 90 ? 'text-emerald-500' : 'text-destructive'}`}>
               {postureScore}/100
             </div>
-            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Real-time aggregate score</p>
+            <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">CURRENT SECURITY POSTURE</p>
           </CardContent>
         </Card>
         
         <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4 px-4">
             <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Open Incidents</CardTitle>
             <AlertTriangle className={`h-4 w-4 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-muted-foreground'}`} />
           </CardHeader>
-          <CardContent>
-            <div className={`text-3xl font-mono text-zinc-100 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-foreground'}`}>
+          <CardContent className="px-4 pb-4">
+            <div className={`text-2xl font-mono text-zinc-100 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-foreground'}`}>
               {openIncidentsCount}
             </div>
-            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Active investigations</p>
+            <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">{openIncidentsCount > 0 ? "Active Threats" : "No Active Threats"}</p>
           </CardContent>
         </Card>
 
         <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4 px-4">
             <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Sentinel Health</CardTitle>
             <Activity className="h-4 w-4 text-primary" />
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-mono text-zinc-100 text-primary ">ACTIVE</div>
-            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">5/5 DETERMINISTIC CHECKS</p>
+          <CardContent className="px-4 pb-4">
+            <div className="text-2xl font-mono text-zinc-100 text-primary ">ACTIVE</div>
+            <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">5/5 DETERMINISTIC CHECKS</p>
           </CardContent>
         </Card>
 
         <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4 px-4">
             <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Active Sessions</CardTitle>
             <Lock className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-mono text-zinc-100 text-foreground">3</div>
-            <p className="text-[10px] font-mono text-zinc-500 mt-2 tracking-widest uppercase">Temporary Decryption</p>
+          <CardContent className="px-4 pb-4">
+            <div className="text-2xl font-mono text-zinc-100 text-foreground">3</div>
+            <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">AUTHENTICATED SESSIONS</p>
           </CardContent>
         </Card>
       </div>
@@ -118,7 +118,7 @@ export default function SOCDashboard() {
                <ShieldAlert className="w-5 h-5" /> ACTIVE SECURITY EVENT
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="px-4 pb-4">
             <div className="flex flex-col gap-2">
               <div className="flex justify-between items-center bg-black/40 p-3 rounded border border-destructive/20">
                 <span className="text-sm font-medium">Type</span>
