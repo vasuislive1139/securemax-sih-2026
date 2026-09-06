@@ -7,6 +7,7 @@ import { Shield, Activity, HardDrive, Key, List, LayoutDashboard, ShieldCheck, L
 import { UserRole } from '@/types';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { PresentationMode } from '@/components/dashboard/PresentationMode';
 
 const navItems = [
   { name: 'SOC', href: '/dashboard/soc', roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
@@ -101,6 +102,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </main>
+      <PresentationMode />
     </div>
   );
 }

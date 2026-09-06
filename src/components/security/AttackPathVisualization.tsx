@@ -3,7 +3,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useDemoStore } from '@/stores/useDemoStore';
-import { ShieldCheck, ArrowDown, ArrowRight, Key, Lock, Fingerprint, Users, FileLock2, ShieldX } from 'lucide-react';
+import { ShieldCheck, ArrowDown, ArrowRight, Key, Lock, Fingerprint, Users, FileLock2, ShieldX, Server } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 export function AttackPathVisualization() {
@@ -57,11 +57,13 @@ export function AttackPathVisualization() {
         <div className="flex flex-col items-center gap-2 max-w-2xl mx-auto">
           
           {/* Top Row: Pre-authorization */}
-          <div className="flex items-center gap-4 w-full justify-center">
+          <div className="flex items-center gap-2 sm:gap-4 w-full justify-center flex-wrap sm:flex-nowrap">
             <StageBox icon={Fingerprint} label="IDENTITY" desc="AUTHENTICATION" status={getStatus('IDENTITY')} />
-            <ArrowRight className={`w-4 h-4 shrink-0 ${getStatus('IDENTITY') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
-            <StageBox icon={Users} label="RBAC + CONTEXT" desc="ROLE EVALUATION" status={getStatus('RBAC')} />
-            <ArrowRight className={`w-4 h-4 shrink-0 ${getStatus('RBAC') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
+            <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${getStatus('IDENTITY') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
+            <StageBox icon={Server} label="SESSION" desc="CONTEXT" status={getStatus('SESSION')} />
+            <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${getStatus('SESSION') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
+            <StageBox icon={Users} label="RBAC" desc="ROLE EVAL" status={getStatus('RBAC')} />
+            <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${getStatus('RBAC') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
             <StageBox icon={FileLock2} label="DOMAIN 1" desc="ASSET POLICY" status={getStatus('DOMAIN1')} />
           </div>
 
@@ -78,12 +80,12 @@ export function AttackPathVisualization() {
           <div className="h-6 w-px bg-zinc-800" />
 
           {/* Bottom Row: Post-authorization cryptography */}
-          <div className="flex items-center gap-4 w-full justify-center">
+          <div className="flex items-center gap-2 sm:gap-4 w-full justify-center flex-wrap sm:flex-nowrap">
             <StageBox icon={ShieldCheck} label="DOMAIN 2" desc="KEY POLICY" status={getStatus('DOMAIN2')} />
-            <ArrowRight className={`w-4 h-4 shrink-0 ${getStatus('DOMAIN2') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
+            <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${getStatus('DOMAIN2') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
             <StageBox icon={Key} label="KMS" desc="KEY SECURITY" status={getStatus('KMS')} />
-            <ArrowRight className={`w-4 h-4 shrink-0 ${getStatus('KMS') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
-            <StageBox icon={Lock} label="DECRYPTION" desc="" status={getStatus('DECRYPTION')} />
+            <ArrowRight className={`w-3.5 h-3.5 shrink-0 ${getStatus('KMS') === 'passed' ? 'text-emerald-500' : 'text-zinc-700'}`} />
+            <StageBox icon={Lock} label="DECRYPTION" desc="DECISION" status={getStatus('DECRYPTION')} />
           </div>
 
         </div>
@@ -110,7 +112,7 @@ function StageBox({ icon: Icon, label, desc, status }: { icon: any, label: strin
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center w-28 h-24 rounded-lg border ${colorClass()} transition-all duration-300 relative`}>
+    <div className={`flex flex-col items-center justify-center w-24 sm:w-28 h-24 rounded-lg border ${colorClass()} transition-all duration-300 relative`}>
       <Icon className="w-5 h-5 mb-1" />
       <span className="text-[10px] font-mono font-medium text-center uppercase tracking-wider">{label}</span>
       {desc && <span className="text-[8px] font-mono text-center uppercase opacity-70 mt-0.5">{desc}</span>}

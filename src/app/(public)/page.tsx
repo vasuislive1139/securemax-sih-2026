@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Fingerprint, Layers, Database, Key, Shield, Lock, Activity, ShieldAlert, CheckCircle2, AlertTriangle, ShieldCheck, FileText, Hexagon } from 'lucide-react';
-import { PresentationMode } from '@/components/dashboard/PresentationMode';
 import { useDemoStore } from '@/stores/useDemoStore';
 
 export default function CyberCommandInterface() {
@@ -204,9 +203,6 @@ export default function CyberCommandInterface() {
           </div>
         </div>
       </main>
-
-      {/* Global Presentation Mode Overlay triggers from here or Admin */}
-      <PresentationMode />
     </div>
   );
 }

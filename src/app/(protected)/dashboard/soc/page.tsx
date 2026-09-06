@@ -7,7 +7,6 @@ import { ShieldCheck, ShieldAlert, Activity, Server, Key, Lock, AlertTriangle } 
 import { useDemoStore } from '@/stores/useDemoStore';
 import { InfrastructureHealth } from '@/components/blockchain/InfrastructureHealth';
 import { KMSHealth } from '@/components/security/KMSHealth';
-import { PresentationMode } from '@/components/dashboard/PresentationMode';
 import { AttackPathVisualization } from '@/components/security/AttackPathVisualization';
 import { SecurityEventTimeline } from '@/components/dashboard/SecurityEventTimeline';
 
@@ -33,8 +32,6 @@ export default function SOCDashboard() {
 
   return (
     <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
-      <PresentationMode />
-
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground uppercase">SECUREMAX</h2>
