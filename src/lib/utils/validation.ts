@@ -30,7 +30,7 @@ export const keyRotationSchema = z.object({
  * @param schema Zod schema
  * @param data Data to validate
  * @returns Validated data
- * @throws {SecureMeshError} If validation fails
+ * @throws {SecureMaxError} If validation fails
  */
 export function validateRequest<T>(schema: z.ZodSchema<T>, data: unknown): T {
   const result = schema.safeParse(data);

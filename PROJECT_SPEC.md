@@ -1,19 +1,19 @@
-# SecureMesh - Project Specification
+# SecureMax - Project Specification
 
 ## Executive Summary
-SecureMesh is a "Self-Defending Decentralized Identity & Secure Digital Asset Access Platform" developed for the SIH26125 challenge by Bharat Electronics Limited (BEL). It addresses the critical vulnerabilities of centralized identity and access management (IAM) systems in defense contexts by decentralizing access control and explicitly separating authorization from decryption.
+SecureMax is a "Self-Defending Decentralized Identity & Secure Digital Asset Access Platform" developed for the SIH26125 challenge by Bharat Electronics Limited (BEL). It addresses the critical vulnerabilities of centralized identity and access management (IAM) systems in defense contexts by decentralizing access control and explicitly separating authorization from decryption.
 
 ## Problem Statement
 In traditional defense networks, centralized IAM systems represent a single point of failure and a high-value target for adversaries. If the central directory or key server is compromised, the entire system's security collapses, allowing unauthorized access to highly sensitive digital assets. Furthermore, legacy systems often conflate the right to access a system with the ability to decrypt data, leading to broad data exposure upon compromise.
 
 ## Core Principle: AUTHORIZATION ≠ DECRYPTION
-The fundamental architectural principle of SecureMesh is the strict decoupling of authorization logic from cryptographic execution. 
+The fundamental architectural principle of SecureMax is the strict decoupling of authorization logic from cryptographic execution. 
 - **Authorization** (who is allowed to access what, under what conditions) is governed by decentralized smart contracts on a blockchain (Chain-1).
 - **Decryption** (the actual release of key material to decrypt data) is handled by a separate domain (Chain-2 and the KMS).
 Even if an attacker compromises the application server, they cannot arbitrarily decrypt data without valid, time-bound cryptographic proofs from both chains.
 
 ## System Overview
-The SecureMesh architecture comprises several distinct components working in concert:
+The SecureMax architecture comprises several distinct components working in concert:
 1. **Dual Blockchain Structure:** Separation of Identity/RBAC (Chain-1) and Key Management (Chain-2).
 2. **DID Implementation:** Decentralized Identifiers for users.
 3. **Authentication:** Wallet-based signature authentication.
@@ -29,7 +29,7 @@ The SecureMesh architecture comprises several distinct components working in con
 13. **Frontend:** React/Next.js client interface.
 
 ## Functional Requirements
-- **FR-001 (Identity):** The system shall support DID registration (`did:securemesh:<address>`) on Chain-1.
+- **FR-001 (Identity):** The system shall support DID registration (`did:securemax:<address>`) on Chain-1.
 - **FR-002 (Auth):** Users shall authenticate via wallet signature (SIWE) yielding a short-lived JWT.
 - **FR-003 (RBAC):** Roles and permissions shall be managed via Chain-1 smart contracts.
 - **FR-004 (Asset Registration):** Assets shall be registered on Chain-1 with metadata stored in the off-chain DB.
@@ -112,4 +112,4 @@ The SecureMesh architecture comprises several distinct components working in con
 - **AEAD (Authenticated Encryption with Associated Data):** Cryptographic scheme ensuring confidentiality and authenticity (e.g., AES-GCM).
 - **RBAC:** Role-Based Access Control.
 - **KMS (Key Management System):** System managing the lifecycle of cryptographic keys.
-- **Sentinel:** SecureMesh's automated security testing and response engine.
+- **Sentinel:** SecureMax's automated security testing and response engine.

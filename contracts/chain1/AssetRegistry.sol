@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../interfaces/ISecureMesh.sol";
+import "../interfaces/ISecureMax.sol";
 
 contract AssetRegistry is Ownable {
     struct Asset {

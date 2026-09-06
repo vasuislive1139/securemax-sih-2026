@@ -1,5 +1,5 @@
 -- ============================================================
--- SecureMesh SIH26125 — Expanded Database Schema Migration
+-- SecureMax SIH26125 — Expanded Database Schema Migration
 -- Supabase PostgreSQL (21 Required Tables)
 -- ============================================================
 
@@ -238,9 +238,9 @@ INSERT INTO roles (id, name, description) VALUES
 
 -- Insert demo users
 INSERT INTO users (id, display_name, email) VALUES
-  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Aarav Mehta', 'aarav@demo.securemesh.local'),
-  ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Riya Sharma', 'riya@demo.securemesh.local'),
-  ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'Arjun Verma', 'arjun@demo.securemesh.local');
+  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Aarav Mehta', 'aarav@demo.securemax.local'),
+  ('bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Riya Sharma', 'riya@demo.securemax.local'),
+  ('cccccccc-cccc-cccc-cccc-cccccccccccc', 'Arjun Verma', 'arjun@demo.securemax.local');
 
 -- Map users to roles
 INSERT INTO user_roles (user_id, role_id) VALUES

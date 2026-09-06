@@ -42,8 +42,8 @@ export function truncateAddress(address: string, chars = 4): string {
 
 /** Truncate a DID for display */
 export function truncateDid(did: string, chars = 6): string {
-  if (!did.startsWith('did:securemesh:')) return did;
-  const address = did.replace('did:securemesh:', '');
+  if (!did.startsWith('did:securemax:')) return did;
+  const address = did.replace('did:securemax:', '');
   return `did:mesh:${address.slice(0, chars)}...${address.slice(-chars)}`;
 }
 

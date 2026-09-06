@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../interfaces/ISecureMesh.sol";
+import "../interfaces/ISecureMax.sol";
 
 contract DecryptionAuth is Ownable {
     struct AuthorizationRecord {
@@ -10,7 +10,7 @@ contract DecryptionAuth is Ownable {
         string userDid;
         bytes32 assetId;
         bytes32 keyId;
-        ISecureMesh.AuthResult result;
+        ISecureMax.AuthResult result;
         uint256 timestamp;
         uint256 expiresAt;
     }
@@ -30,7 +30,7 @@ contract DecryptionAuth is Ownable {
             userDid: userDid,
             assetId: assetId,
             keyId: keyId,
-            result: ISecureMesh.AuthResult.Authorized,
+            result: ISecureMax.AuthResult.Authorized,
             timestamp: block.timestamp,
             expiresAt: expiresAt
         });
@@ -39,8 +39,8 @@ contract DecryptionAuth is Ownable {
 
     function recordCompletion(bytes32 authId) external onlyOwner {
         require(authorizations[authId].timestamp != 0, "Auth ID not found");
-        require(authorizations[authId].result == ISecureMesh.AuthResult.Authorized, "Not authorized");
-        authorizations[authId].result = ISecureMesh.AuthResult.Completed;
+        require(authorizations[authId].result == ISecureMax.AuthResult.Authorized, "Not authorized");
+        authorizations[authId].result = ISecureMax.AuthResult.Completed;
         emit DecryptionCompleted(authId);
     }
 
@@ -51,7 +51,7 @@ contract DecryptionAuth is Ownable {
             userDid: userDid,
             assetId: assetId,
             keyId: bytes32(0),
-            result: ISecureMesh.AuthResult.Denied,
+            result: ISecureMax.AuthResult.Denied,
             timestamp: block.timestamp,
             expiresAt: block.timestamp
         });
@@ -65,7 +65,7 @@ contract DecryptionAuth is Ownable {
     function isAuthorizationValid(bytes32 authId) external view returns (bool) {
         AuthorizationRecord memory auth = authorizations[authId];
         if (auth.timestamp == 0) return false;
-        if (auth.result != ISecureMesh.AuthResult.Authorized) return false;
+        if (auth.result != ISecureMax.AuthResult.Authorized) return false;
         if (block.timestamp > auth.expiresAt) return false;
         return true;
     }

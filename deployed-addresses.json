@@ -1,13 +1,13 @@
 {
   "chain1": {
-    "IdentityRegistry": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    "RBACManager": "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
-    "AssetRegistry": "0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0",
-    "AuditAnchor": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
+    "IdentityRegistry": "0xb2Ad55fD06552E47E4304e3A48AACDdde33808d0",
+    "RBACManager": "0x9b4B628653b0Aa4dAAeccC17273b287e875C61DF",
+    "AssetRegistry": "0x41652715d743C7f9740b83526B09994e60aa61B6",
+    "AuditAnchor": "0xE0f143637d9812f624DCF634d388d6D06d712688"
   },
   "chain2": {
-    "KeyPolicyManager": "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9",
-    "KeyLifecycle": "0x5FC8d32690cc91D4c39d9d3abcBD16989F875707",
-    "DecryptionAuth": "0x0165878A594ca255338adfa4d48449f69242Eb8F"
+    "KeyPolicyManager": "0xE31a493DF191fD0fD88c99820d0AfCCEC5F13f80",
+    "KeyLifecycle": "0xBd088a9cd06f59aDaB56202F335EfC300614f743",
+    "DecryptionAuth": "0x65d897450295189230bb49C2b4D83c904A36Fc07"
   }
 }

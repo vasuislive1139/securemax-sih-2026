@@ -7,5 +7,5 @@ export default async function DashboardRedirect() {
   // if (!session) redirect('/');
   // redirect(`/dashboard/${session.role.toLowerCase()}`);
   
-  redirect('/dashboard/admin');
+  redirect('/dashboard/soc');
 }

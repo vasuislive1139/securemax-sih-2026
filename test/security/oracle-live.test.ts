@@ -28,6 +28,14 @@ describe('[LOCAL BLOCKCHAIN INTEGRATION TEST] Oracle & Dual-Chain Execution', ()
         process.env.NEXT_PUBLIC_KEY_LIFECYCLE_ADDRESS = keyLifecycleAddress;
         process.env.NEXT_PUBLIC_CHAIN_RPC_URL = 'http://127.0.0.1:8545';
         process.env.NODE_ENV = 'test';
+        
+        // Ensure the node is actually running
+        try {
+          await publicClient.getBlockNumber();
+        } catch {
+          console.warn('Hardhat node is not running. Skipping integration tests.');
+          assetRegistryAddress = undefined as any;
+        }
       } else {
         console.warn('deployed-addresses.json not found. Make sure hardhat node is running and scripts/deploy.ts was executed.');
       }

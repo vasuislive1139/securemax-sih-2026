@@ -3,7 +3,7 @@ import { deriveKEK, generateDEK, encryptData, decryptData } from '../crypto';
 import { supabaseAdmin } from '../db/client';
 import { SignJWT, jwtVerify } from 'jose';
 
-const MASTER_KEY_HEX = process.env.SECUREMESH_KMS_MASTER_KEY;
+const MASTER_KEY_HEX = process.env.SECUREMAX_KMS_MASTER_KEY;
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET || 'fallback-secret-min-32-chars-long-padding');
 
 // ==========================================

@@ -36,7 +36,7 @@ export default async function AdminDashboardPage() {
             <AlertCircle className="h-12 w-12 text-destructive mb-4" />
             <h3 className="text-xl font-semibold text-destructive">Database Connection Refused</h3>
             <p className="text-sm text-destructive/80 mt-2 max-w-md">
-              SecureMesh could not connect to the Supabase instance. Ensure environment variables are configured and the 21-table schema has been migrated.
+              SecureMax could not connect to the Supabase instance. Ensure environment variables are configured and the 21-table schema has been migrated.
             </p>
           </CardContent>
         </Card>

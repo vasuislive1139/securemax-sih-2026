@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Pausable.sol";
-import "../interfaces/ISecureMesh.sol";
+import "../interfaces/ISecureMax.sol";
 
 contract IdentityRegistry is Ownable, Pausable {
     struct Identity {
@@ -11,7 +11,7 @@ contract IdentityRegistry is Ownable, Pausable {
         string did;
         bytes32 nameHash;
         uint8 role;
-        ISecureMesh.IdentityStatus status;
+        ISecureMax.IdentityStatus status;
         uint256 registeredAt;
         uint256 updatedAt;
     }
@@ -19,7 +19,7 @@ contract IdentityRegistry is Ownable, Pausable {
     mapping(string => Identity) private identities;
 
     event IdentityRegistered(string did, address owner, uint8 role);
-    event IdentityStatusChanged(string did, ISecureMesh.IdentityStatus status);
+    event IdentityStatusChanged(string did, ISecureMax.IdentityStatus status);
     event RoleUpdated(string did, uint8 oldRole, uint8 newRole);
 
     constructor() Ownable(msg.sender) {}
@@ -31,14 +31,14 @@ contract IdentityRegistry is Ownable, Pausable {
             did: did,
             nameHash: nameHash,
             role: role,
-            status: ISecureMesh.IdentityStatus.Active,
+            status: ISecureMax.IdentityStatus.Active,
             registeredAt: block.timestamp,
             updatedAt: block.timestamp
         });
         emit IdentityRegistered(did, _owner, role);
     }
 
-    function updateStatus(string memory did, ISecureMesh.IdentityStatus status) external onlyOwner whenNotPaused {
+    function updateStatus(string memory did, ISecureMax.IdentityStatus status) external onlyOwner whenNotPaused {
         require(identities[did].owner != address(0), "Identity not found");
         identities[did].status = status;
         identities[did].updatedAt = block.timestamp;
@@ -58,6 +58,6 @@ contract IdentityRegistry is Ownable, Pausable {
     }
 
     function isActive(string memory did) external view returns (bool) {
-        return identities[did].status == ISecureMesh.IdentityStatus.Active;
+        return identities[did].status == ISecureMax.IdentityStatus.Active;
     }
 }

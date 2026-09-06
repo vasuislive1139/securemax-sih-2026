@@ -8,7 +8,7 @@ const nextConfig = {
   },
   // Fail fast if critical env vars are missing
   env: {
-    SECUREMESH_BUILD_TIME: new Date().toISOString(),
+    SECUREMAX_BUILD_TIME: new Date().toISOString(),
   },
 };
 

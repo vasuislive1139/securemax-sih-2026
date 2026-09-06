@@ -1,11 +1,11 @@
-# SecureMesh - Implementation Plan
+# SecureMax - Implementation Plan
 
 ## Overview & Strategy
-This plan outlines a phased approach to building the SecureMesh prototype for SIH26125. The strategy prioritizes establishing the core cryptographic and blockchain foundations before building the UI, ensuring the critical security properties are solid.
+This plan outlines a phased approach to building the SecureMax prototype for SIH26125. The strategy prioritizes establishing the core cryptographic and blockchain foundations before building the UI, ensuring the critical security properties are solid.
 
 ## Repository Structure
 ```text
-SecureMesh/
+SecureMax/
 ├── docs/                         # Architecture documents
 ├── src/
 │   ├── app/                      # Next.js App Router
@@ -133,7 +133,7 @@ SecureMesh/
 
 ```mermaid
 gantt
-    title SecureMesh Implementation Plan
+    title SecureMax Implementation Plan
     dateFormat  YYYY-MM-DD
     axisFormat  %d
     

@@ -2,24 +2,23 @@ import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Key, Clock, FileText, CheckCircle2 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { supabaseClient } from '@/lib/db/client';
+import { supabaseAdmin } from '@/lib/db/client';
+import { getVerifiedSession } from '@/lib/auth/session';
 import { Button } from '@/components/ui/button';
 
 export default async function UserDashboardPage() {
-  // In a real implementation, we extract user ID from the session JWT.
-  // Using a mock standard user ID for this prototype view.
-  const MOCK_USER_ID = '00000000-0000-0000-0000-000000000002'; // Assuming this is an ENGINEER
+  const session = await getVerifiedSession();
 
-  const { data: assignments } = await supabaseClient
+  const { data: assignments } = await supabaseAdmin
     .from('asset_assignments')
-    .select('*, assets(name, classification, cid)')
-    .eq('user_id', MOCK_USER_ID)
+    .select('*, assets(name, classification)')
+    .eq('user_id', session.userId)
     .eq('status', 'ACTIVE');
 
-  const { data: requests } = await supabaseClient
+  const { data: requests } = await supabaseAdmin
     .from('access_requests')
     .select('*, assets(name)')
-    .eq('user_id', MOCK_USER_ID)
+    .eq('user_id', session.userId)
     .order('created_at', { ascending: false })
     .limit(5);
 

@@ -1,0 +1,127 @@
+'use client';
+
+import React from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { ShieldCheck, ShieldAlert, Activity, Server, Key, Lock, AlertTriangle } from 'lucide-react';
+import { useDemoStore } from '@/stores/useDemoStore';
+import { InfrastructureHealth } from '@/components/blockchain/InfrastructureHealth';
+import { KMSHealth } from '@/components/security/KMSHealth';
+import { PresentationMode } from '@/components/dashboard/PresentationMode';
+import { AttackPathVisualization } from '@/components/security/AttackPathVisualization';
+
+export default function SOCDashboard() {
+  const { systemState, postureScore, incidents, activeThreat } = useDemoStore();
+
+  const isHealthy = systemState === 'NORMAL' || systemState === 'RECOVERED';
+  const openIncidentsCount = incidents.filter(i => i.status !== 'RESOLVED').length;
+
+  return (
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-12">
+      <PresentationMode />
+
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground">Security Operations Center</h2>
+          <p className="text-muted-foreground mt-1">Bharat Electronics Secure Systems - Demonstration Environment</p>
+        </div>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 sm:mt-0">
+          <Badge variant="outline" className={`px-4 py-1.5 font-mono ${isHealthy ? 'border-emerald-500/50 text-emerald-400' : 'border-destructive/50 text-destructive'}`}>
+            SYSTEM STATE: {systemState}
+          </Badge>
+          <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 px-4 py-1.5 font-mono">
+            ROLE: SECURITY_ANALYST
+          </Badge>
+        </div>
+      </div>
+
+      <div className="bg-primary/5 border border-primary/20 rounded-md p-3 text-center">
+        <p className="text-xs font-mono text-primary/80">SYNTHETIC DEMONSTRATION DATA — NOT REAL BEL INFORMATION</p>
+      </div>
+
+      {/* Top Metrics Row */}
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <Card className={`glass-panel ${isHealthy ? 'tech-border' : 'border-destructive/50 shadow-[0_0_15px_rgba(239,68,68,0.2)]'}`}>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Security Posture</CardTitle>
+            {postureScore >= 90 ? <ShieldCheck className="h-4 w-4 text-emerald-500" /> : <ShieldAlert className="h-4 w-4 text-destructive" />}
+          </CardHeader>
+          <CardContent>
+            <div className={`text-2xl font-bold font-mono ${postureScore >= 90 ? 'text-emerald-500' : 'text-destructive'}`}>
+              {postureScore}/100
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">Real-time aggregate score</p>
+          </CardContent>
+        </Card>
+        
+        <Card className="glass-panel tech-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Open Incidents</CardTitle>
+            <AlertTriangle className={`h-4 w-4 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-muted-foreground'}`} />
+          </CardHeader>
+          <CardContent>
+            <div className={`text-2xl font-bold font-mono ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-foreground'}`}>
+              {openIncidentsCount}
+            </div>
+            <p className="text-xs text-muted-foreground mt-1">Active investigations</p>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-panel tech-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Sentinel Health</CardTitle>
+            <Activity className="h-4 w-4 text-primary" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold font-mono text-primary glow-cyan">ACTIVE</div>
+            <p className="text-xs text-muted-foreground mt-1">5/5 Deterministic checks</p>
+          </CardContent>
+        </Card>
+
+        <Card className="glass-panel tech-border">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium text-muted-foreground">Active Sessions</CardTitle>
+            <Lock className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold font-mono text-foreground">3</div>
+            <p className="text-xs text-muted-foreground mt-1">Temporary Decryption</p>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <InfrastructureHealth />
+        <KMSHealth />
+      </div>
+
+      <AttackPathVisualization />
+
+      {activeThreat && (
+        <Card className="glass-panel border-destructive/50 bg-destructive/10 animate-pulse-border">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-destructive">
+               <ShieldAlert className="w-5 h-5" /> ACTIVE SECURITY EVENT
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col gap-2">
+              <div className="flex justify-between items-center bg-black/40 p-3 rounded border border-destructive/20">
+                <span className="text-sm font-medium">Type</span>
+                <span className="text-sm font-mono text-destructive">{activeThreat.name}</span>
+              </div>
+              <div className="flex justify-between items-center bg-black/40 p-3 rounded border border-destructive/20">
+                <span className="text-sm font-medium">Status</span>
+                <span className="text-sm font-mono text-amber-500">BLOCKED AT {activeThreat.blockedAt}</span>
+              </div>
+              <div className="flex justify-between items-center bg-black/40 p-3 rounded border border-destructive/20">
+                <span className="text-sm font-medium">Source</span>
+                <span className="text-sm font-mono text-muted-foreground">SANDBOX SIMULATION</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+    </div>
+  );
+}

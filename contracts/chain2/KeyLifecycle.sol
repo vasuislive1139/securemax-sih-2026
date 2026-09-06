@@ -2,14 +2,14 @@
 pragma solidity ^0.8.24;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "../interfaces/ISecureMesh.sol";
+import "../interfaces/ISecureMax.sol";
 
 contract KeyLifecycle is Ownable {
     struct KeyMetadata {
         bytes32 keyId;
         bytes32 assetId;
         uint256 version;
-        ISecureMesh.KeyState status;
+        ISecureMax.KeyState status;
         uint8 algorithm;
         uint256 createdAt;
         uint256 rotatedAt;
@@ -30,7 +30,7 @@ contract KeyLifecycle is Ownable {
             keyId: keyId,
             assetId: assetId,
             version: version,
-            status: ISecureMesh.KeyState.Active,
+            status: ISecureMax.KeyState.Active,
             algorithm: algorithm,
             createdAt: block.timestamp,
             rotatedAt: 0,
@@ -41,17 +41,17 @@ contract KeyLifecycle is Ownable {
 
     function rotateKey(bytes32 oldKeyId, bytes32 newKeyId, uint256 newVersion) external onlyOwner {
         require(keys[oldKeyId].createdAt != 0, "Old key not found");
-        require(keys[oldKeyId].status == ISecureMesh.KeyState.Active, "Old key not active");
+        require(keys[oldKeyId].status == ISecureMax.KeyState.Active, "Old key not active");
         require(keys[newKeyId].createdAt == 0, "New key already exists");
         
-        keys[oldKeyId].status = ISecureMesh.KeyState.Rotated;
+        keys[oldKeyId].status = ISecureMax.KeyState.Rotated;
         keys[oldKeyId].rotatedAt = block.timestamp;
         
         keys[newKeyId] = KeyMetadata({
             keyId: newKeyId,
             assetId: keys[oldKeyId].assetId,
             version: newVersion,
-            status: ISecureMesh.KeyState.Active,
+            status: ISecureMax.KeyState.Active,
             algorithm: keys[oldKeyId].algorithm,
             createdAt: block.timestamp,
             rotatedAt: 0,
@@ -63,9 +63,9 @@ contract KeyLifecycle is Ownable {
 
     function revokeKey(bytes32 keyId) external onlyOwner {
         require(keys[keyId].createdAt != 0, "Key not found");
-        require(keys[keyId].status == ISecureMesh.KeyState.Active || keys[keyId].status == ISecureMesh.KeyState.Rotated, "Invalid state for revocation");
+        require(keys[keyId].status == ISecureMax.KeyState.Active || keys[keyId].status == ISecureMax.KeyState.Rotated, "Invalid state for revocation");
         
-        keys[keyId].status = ISecureMesh.KeyState.Revoked;
+        keys[keyId].status = ISecureMax.KeyState.Revoked;
         keys[keyId].revokedAt = block.timestamp;
         
         emit KeyRevoked(keyId);
@@ -76,6 +76,6 @@ contract KeyLifecycle is Ownable {
     }
 
     function isKeyActive(bytes32 keyId) external view returns (bool) {
-        return keys[keyId].status == ISecureMesh.KeyState.Active;
+        return keys[keyId].status == ISecureMax.KeyState.Active;
     }
 }

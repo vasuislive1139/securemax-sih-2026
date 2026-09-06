@@ -1,7 +1,7 @@
-# SecureMesh Database Schema
+# SecureMax Database Schema
 
 ## Database Overview
-SecureMesh utilizes **Supabase PostgreSQL** as its primary relational database. This schema has been expanded to strictly follow the 21 required entities for the SIH26125 prototype.
+SecureMax utilizes **Supabase PostgreSQL** as its primary relational database. This schema has been expanded to strictly follow the 21 required entities for the SIH26125 prototype.
 
 ## PostgreSQL ENUM Types
 - `user_status`: ACTIVE, SUSPENDED, REVOKED
@@ -38,7 +38,7 @@ SecureMesh utilizes **Supabase PostgreSQL** as its primary relational database. 
 ### 4. dids
 - `id` (uuid) - PK
 - `user_id` (uuid) - FK to users
-- `did_string` (text) - unique (e.g., 'did:securemesh:0x...')
+- `did_string` (text) - unique (e.g., 'did:securemax:0x...')
 - `status` (user_status)
 - `registered_at` (timestamptz)
 

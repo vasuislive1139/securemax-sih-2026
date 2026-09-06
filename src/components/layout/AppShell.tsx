@@ -24,7 +24,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <div className="flex h-16 items-center justify-between px-4 border-b border-white/5">
                <div className="flex items-center">
                  <ShieldCheck className="h-6 w-6 text-primary mr-2" />
-                 <span className="text-lg font-bold glow-cyan">SecureMesh</span>
+                 <span className="text-lg font-bold glow-cyan">SecureMax</span>
                </div>
                <Button variant="ghost" size="icon" onClick={() => setMobileMenuOpen(false)}>
                  <X className="h-5 w-5 text-muted-foreground" />
@@ -45,7 +45,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <span className="sr-only">Toggle Sidebar</span>
             </Button>
             {/* Mobile Title */}
-            <span className="text-sm font-bold tracking-widest text-primary lg:hidden">SECUREMESH</span>
+            <span className="text-sm font-bold tracking-widest text-primary lg:hidden">SECUREMAX</span>
           </div>
           
           <div className="flex flex-1 items-center justify-end space-x-4">

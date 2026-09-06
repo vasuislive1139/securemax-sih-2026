@@ -137,9 +137,9 @@ export async function executeSentinelScan(triggeredBy: string): Promise<string> 
 
   const ctx: SecurityCheckContext = {
     scanId,
-    sandboxUserId: 'sandbox-user-' + crypto.randomUUID(),
-    sandboxAssetId: 'sandbox-asset-' + crypto.randomUUID(),
-    sandboxAdminId: 'sandbox-admin-' + crypto.randomUUID()
+    sandboxUserId: crypto.randomUUID(),
+    sandboxAssetId: crypto.randomUUID(),
+    sandboxAdminId: crypto.randomUUID()
   };
 
   // 2. Execute Sandbox Scenarios

@@ -3,7 +3,7 @@ import './globals.css';
 import { Providers } from './providers';
 
 export const metadata: Metadata = {
-  title: 'SecureMesh | Self-Defending Decentralized Identity Platform',
+  title: 'SecureMax | Self-Defending Decentralized Identity Platform',
   description: 'SIH26125 Prototype',
 };
 

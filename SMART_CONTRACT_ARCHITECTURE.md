@@ -1,7 +1,7 @@
-# SecureMesh Smart Contract Architecture
+# SecureMax Smart Contract Architecture
 
 ## Overview
-SecureMesh employs a **dual-domain architecture** separating Identity/Access from Key Management. 
+SecureMax employs a **dual-domain architecture** separating Identity/Access from Key Management. 
 **Why two logical chains?** This separation minimizes systemic risk. The Identity/Access domain manages who you are and what you can request. The Key Management domain manages cryptographic authorizations. An exploit in one domain does not immediately compromise the other, as the KMS requires valid proofs from both to release a decryption key.
 **Prototype Compromise:** For the SIH prototype realism and ease of Vercel deployment, both contract sets are deployed to the *same* EVM testnet (e.g., Sepolia). However, they use completely separate contract namespaces, deployer accounts, and ABI surfaces to emulate the architectural separation. In a production environment, these would be on physically separate networks or isolated L2s.
 
@@ -201,7 +201,7 @@ Identity and access logic dictate business rules ("Alice is an engineer and can 
 ## Additional Architecture Details
 
 ### Shared Interfaces
-- **`ISecureMesh.sol`**: Contains shared structs, enums, and external methods to prevent duplication across contracts and standardize types (e.g. standardizing user roles, classifications, key algorithms).
+- **`ISecureMax.sol`**: Contains shared structs, enums, and external methods to prevent duplication across contracts and standardize types (e.g. standardizing user roles, classifications, key algorithms).
 
 ### Gas Optimization Notes
 - Use `uint256` for operations when possible; where struct packing is utilized (e.g., grouping `uint8` variables together like `role` and `status` in `Identity`), do so intentionally.
@@ -215,7 +215,7 @@ Identity and access logic dictate business rules ("Alice is an engineer and can 
 - **Event Ordering:** Rely on strict event emission patterns to ensure reliable monitoring by off-chain indexers.
 
 ### Deployment Order & Dependencies
-1. Shared Libraries/Interfaces (`ISecureMesh.sol`)
+1. Shared Libraries/Interfaces (`ISecureMax.sol`)
 2. `IdentityRegistry.sol`
 3. `RBACManager.sol`
 4. `AssetRegistry.sol`

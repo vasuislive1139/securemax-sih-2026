@@ -1,10 +1,10 @@
-# SecureMesh Security Model
+# SecureMax Security Model
 
 ## 1. Security Philosophy
-SecureMesh (SIH26125) is built upon a foundation of **Zero-Trust architecture**, **defense-in-depth**, and **fail-closed** design. 
+SecureMax (SIH26125) is built upon a foundation of **Zero-Trust architecture**, **defense-in-depth**, and **fail-closed** design. 
 
-The core operating principle of SecureMesh is: **AUTHORIZATION ≠ DECRYPTION**. 
-In traditional systems, if a user is authorized, they are implicitly granted the ability to read the file. In SecureMesh, these are two separate steps across two separate boundaries. 
+The core operating principle of SecureMax is: **AUTHORIZATION ≠ DECRYPTION**. 
+In traditional systems, if a user is authorized, they are implicitly granted the ability to read the file. In SecureMax, these are two separate steps across two separate boundaries. 
 - **Authorization** means verifying identity and permissions (handled by Chain-1).
 - **Decryption** means obtaining the specific, ephemeral key material required to read the ciphertext (handled by Chain-2 and the Key Management System).
 An attacker who bypasses the authorization layer still cannot read the data because they lack the cryptographic material.
@@ -42,7 +42,7 @@ flowchart TD
 
 ## 3. Identity & Authentication Model
 
-- **DID Scheme:** SecureMesh employs a simplified Decentralized Identifier (DID) scheme formatted as `did:securemesh:<ethereum_address_lowercase>`.
+- **DID Scheme:** SecureMax employs a simplified Decentralized Identifier (DID) scheme formatted as `did:securemax:<ethereum_address_lowercase>`.
 - **Wallet Signature Authentication (SIWE):** Primary authentication utilizes wallet signatures. 
   - **Nonce Security [HARDENED]:** To prevent replay attacks (Threat Vector 26), the server generates a cryptographically secure random nonce, stores it in an HTTP-only cookie, and requires the signature to include this exact nonce. The nonce is destroyed immediately upon validation.
 - **Session Management:** The server issues an HTTP-only session cookie containing a JWT upon successful signature verification. Sessions have a strict **1-hour expiration**, requiring re-signature or token refresh.
@@ -50,7 +50,7 @@ flowchart TD
 
 ## 4. Authorization Model
 
-SecureMesh uses a comprehensive Role-Based Access Control (RBAC) architecture with contextual evaluation.
+SecureMax uses a comprehensive Role-Based Access Control (RBAC) architecture with contextual evaluation.
 
 - **Explicit Permission Checks:** Every action requires explicit permission verification.
 - **RPC Lag Protection [HARDENED]:** To prevent stale authorization (Vector 13/14), API routes performing critical checks must query the RPC node with `blockTag: 'latest'` and strictly bypass all application-level caches (`no-store`).
@@ -101,7 +101,7 @@ sequenceDiagram
 
 ## 7. Blockchain Security
 
-SecureMesh utilizes two separated blockchain domains to enforce the authorization ≠ decryption boundary.
+SecureMax utilizes two separated blockchain domains to enforce the authorization ≠ decryption boundary.
 
 - **Chain-1 Security:** Guarantees identity immutability, tracks role changes, and ensures asset provenance.
 - **Chain-2 Security:** Enforces key policies and provides non-repudiation of cryptographic authorization events.

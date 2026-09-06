@@ -1,15 +1,15 @@
-# SecureMesh System Architecture
+# SecureMax System Architecture
 
 ## 1. System Architecture Overview
 
-SecureMesh is designed as a decentralized identity and secure digital asset access platform, implementing a robust zero-trust architecture. 
+SecureMax is designed as a decentralized identity and secure digital asset access platform, implementing a robust zero-trust architecture. 
 
 ```mermaid
 C4Context
     title System Architecture Overview
     
-    Person(user, "User", "Client accessing the SecureMesh application via browser")
-    System(app, "SecureMesh App", "Next.js Application acting as the central interface and API gateway")
+    Person(user, "User", "Client accessing the SecureMax application via browser")
+    System(app, "SecureMax App", "Next.js Application acting as the central interface and API gateway")
     System_Boundary(b1, "Blockchain-1 Domain") {
         System(chain1, "Identity & Access Contracts", "Smart contracts handling DIDs, RBAC, and Asset Registration")
     }
@@ -36,7 +36,7 @@ C4Context
 - **Fail-Closed**: In the event of an error, exception, or timeout at any stage of authorization or decryption, the system defaults to denying access.
 - **Separation of Concerns**: Identity management and key management are logically separated into two distinct blockchain domains.
 - **Least Privilege**: Users are granted the minimum level of access required to perform their tasks, enforced by RBAC.
-- **AUTHORIZATION ≠ DECRYPTION**: A critical principle of SecureMesh. Having permission to access an asset (authorization) is mathematically distinct from the ability to decrypt it. Authorization happens via smart contracts; decryption requires the transient synthesis of keys via the KMS upon successful authorization.
+- **AUTHORIZATION ≠ DECRYPTION**: A critical principle of SecureMax. Having permission to access an asset (authorization) is mathematically distinct from the ability to decrypt it. Authorization happens via smart contracts; decryption requires the transient synthesis of keys via the KMS upon successful authorization.
 
 ## 3. Layer Architecture
 
@@ -265,7 +265,7 @@ As an SIH prototype, the following deliberate architectural compromises were mad
 1. **Both chains on same testnet**: Chain-1 and Chain-2 are deployed to the same EVM testnet (Sepolia) using namespaces. Production would physically separate them onto distinct networks or L2s.
 2. **Software KMS**: We use a TypeScript software KMS abstraction. Production requires an HSM-backed service (e.g., AWS KMS, Azure Key Vault).
 3. **Gas paid by deployer wallets**: The backend subsidizes gas for automated prototype functions. Production requires meta-transactions (EIP-2771) or robust gas stations.
-4. **No formal DID resolution**: We use simplified `did:securemesh:<address>` strings. Production requires a full W3C compliant DID resolver infrastructure.
+4. **No formal DID resolution**: We use simplified `did:securemax:<address>` strings. Production requires a full W3C compliant DID resolver infrastructure.
 5. **Sentinel sandbox shares DB**: Sandbox records share the same DB instance marked with a flag. Production demands a physically isolated staging/testing database environment.
 6. **No hardware device binding**: Contextual auth lacks hardware attestation. Production requires FIDO2/WebAuthn for strict device binding.
 7. **Single Vercel region**: Deployed to a single region. Production requires multi-region deployments with edge caching.

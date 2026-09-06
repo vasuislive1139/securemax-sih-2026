@@ -1,7 +1,7 @@
-# SecureMesh Threat Model
+# SecureMax Threat Model
 
 ## 1. Threat Modeling Methodology
-This threat model utilizes the **STRIDE** methodology (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) combined with targeted **Attack Trees** to systematically identify and mitigate risks within the SecureMesh architecture.
+This threat model utilizes the **STRIDE** methodology (Spoofing, Tampering, Repudiation, Information Disclosure, Denial of Service, Elevation of Privilege) combined with targeted **Attack Trees** to systematically identify and mitigate risks within the SecureMax architecture.
 
 ## 2. System Boundary & Attack Surface
 
@@ -110,7 +110,7 @@ graph TD
 ```
 
 ## 6. Cross-Chain Boundary Threats
-Because SecureMesh utilizes two chains, an attacker must compromise the state of both to achieve unauthorized decryption.
+Because SecureMax utilizes two chains, an attacker must compromise the state of both to achieve unauthorized decryption.
 - **Threat:** Malicious RPC node returning spoofed Chain-1 state (saying user has ADMIN).
 - **Mitigation:** The application ALSO queries Chain-2 for the Key Policy. If Chain-2 has no matching authorization event triggered by a valid Chain-1 state, the KMS denies the key.
 

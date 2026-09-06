@@ -10,7 +10,7 @@ export default function PublicLayout({
           <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
             <div className="h-4 w-4 bg-background rounded-sm animate-pulse-secure" />
           </div>
-          <span className="text-xl font-bold tracking-tight glow-cyan">SecureMesh</span>
+          <span className="text-xl font-bold tracking-tight glow-cyan">SecureMax</span>
         </div>
         <div className="text-sm font-mono text-muted-foreground">
           SIH26125 PROTOTYPE

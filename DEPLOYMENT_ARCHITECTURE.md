@@ -1,8 +1,8 @@
-# SecureMesh Deployment Architecture
+# SecureMax Deployment Architecture
 
 ## 1. Deployment Overview
 
-SecureMesh uses a modern, serverless deployment stack tailored for the SIH prototype.
+SecureMax uses a modern, serverless deployment stack tailored for the SIH prototype.
 
 ```mermaid
 graph TD
@@ -73,8 +73,8 @@ graph TD
 | `NEXT_PUBLIC_KEY_POLICY_MANAGER_ADDRESS`| Yes | Contract address | Frontend/Backend | `0xabc...` |
 | `NEXT_PUBLIC_KEY_LIFECYCLE_ADDRESS` | Yes | Contract address | Frontend/Backend | `0xabc...` |
 | `NEXT_PUBLIC_DECRYPTION_AUTH_ADDRESS` | Yes | Contract address | Frontend/Backend | `0xabc...` |
-| `SECUREMESH_KMS_MASTER_KEY` | Yes | 256-bit AES master key (hex) | Backend (KMS) | `abcdef...` |
-| `SECUREMESH_KEK_SALT` | Yes | Salt for deriving KEKs | Backend (KMS) | `random_string` |
+| `SECUREMAX_KMS_MASTER_KEY` | Yes | 256-bit AES master key (hex) | Backend (KMS) | `abcdef...` |
+| `SECUREMAX_KEK_SALT` | Yes | Salt for deriving KEKs | Backend (KMS) | `random_string` |
 | `JWT_SECRET` | Yes | Secret for signing auth tokens | Backend | `super_secret` |
 | `SESSION_SECRET` | Yes | Secret for session cookies | Backend | `session_secret` |
 | `NEXT_PUBLIC_APP_URL` | Yes | Base URL of the app | Frontend/Backend | `http://localhost:3000` |
@@ -104,8 +104,8 @@ NEXT_PUBLIC_KEY_LIFECYCLE_ADDRESS=0x...
 NEXT_PUBLIC_DECRYPTION_AUTH_ADDRESS=0x...
 
 # KMS
-SECUREMESH_KMS_MASTER_KEY=your_256_bit_hex_key
-SECUREMESH_KEK_SALT=your_random_salt
+SECUREMAX_KMS_MASTER_KEY=your_256_bit_hex_key
+SECUREMAX_KEK_SALT=your_random_salt
 
 # Auth
 JWT_SECRET=your_jwt_secret
@@ -126,7 +126,7 @@ NODE_ENV=development
   5. **Deploy Vercel**: Push to Vercel preview/production environments.
 
 ## 8. Domain & DNS
-- **DNS**: Configured in Vercel to route a custom domain (e.g., `securemesh.app`) to the Vercel edge network.
+- **DNS**: Configured in Vercel to route a custom domain (e.g., `securemax.app`) to the Vercel edge network.
 
 ## 9. Monitoring & Observability
 - **Vercel Analytics**: Out-of-the-box tracking for web vitals and API route latency.
@@ -136,7 +136,7 @@ NODE_ENV=development
 ## 10. Disaster Recovery
 - **Database**: Supabase automatic daily backups (Point-in-Time Recovery enabled for production).
 - **Contracts**: Smart contract state is immutable; recovery relies on frontend configuration updates pointing to new addresses in case of a required migration.
-- **Secrets**: If `SECUREMESH_KMS_MASTER_KEY` is compromised, all data must be re-encrypted. Strict rotation policies for environment variables are required.
+- **Secrets**: If `SECUREMAX_KMS_MASTER_KEY` is compromised, all data must be re-encrypted. Strict rotation policies for environment variables are required.
 
 ## 11. Production Readiness Checklist
 Before migrating from the SIH prototype to a real production environment, the following must be implemented:

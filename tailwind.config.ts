@@ -39,7 +39,7 @@ const config: Config = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
-        // SecureMesh custom colors
+        // SecureMax custom colors
         mesh: {
           50: '#ecfeff',
           100: '#cffafe',

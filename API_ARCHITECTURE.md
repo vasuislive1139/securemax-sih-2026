@@ -1,10 +1,10 @@
-# SecureMesh API Architecture
+# SecureMax API Architecture
 
-This document defines the backend API architecture for SecureMesh (SIH26125), outlining principles, middleware, standard formats, and a detailed endpoint reference.
+This document defines the backend API architecture for SecureMax (SIH26125), outlining principles, middleware, standard formats, and a detailed endpoint reference.
 
 ## 1. API Design Principles
 
-SecureMesh adopts a strict, security-first API design philosophy:
+SecureMax adopts a strict, security-first API design philosophy:
 - **RESTful Conventions**: Consistent use of HTTP verbs (GET, POST, PATCH) and resource-oriented URLs.
 - **Fail-Closed Strategy**: Any failure in authorization, blockchain state verification, or internal service health immediately terminates the request and returns a structured error. No partial data is ever returned on security failures.
 - **Consistent Error Format**: All API responses (success and error) follow a strictly typed schema, simplifying client-side error handling and ensuring no stack traces leak.
@@ -13,7 +13,7 @@ SecureMesh adopts a strict, security-first API design philosophy:
 
 ## 2. Middleware Architecture
 
-SecureMesh implements a robust middleware pipeline to intercept and evaluate every request before it hits the route handler.
+SecureMax implements a robust middleware pipeline to intercept and evaluate every request before it hits the route handler.
 
 ```mermaid
 flowchart LR
@@ -35,7 +35,7 @@ flowchart LR
 - **Audit Logger**: Asynchronously records the outcome (success or failure) to the secure audit trail.
 
 ## 3. Authentication Middleware
-SecureMesh relies on a multi-step authentication process:
+SecureMax relies on a multi-step authentication process:
 1. **Wallet Signature Verification**: Validates a SIWE (Sign-In with Ethereum) style message to ensure the caller controls the corresponding EVM address.
 2. **JWT Session Token Validation**: Once authenticated, the server issues an HTTP-only JWT. The middleware validates the token signature, expiry, and not-before claims on subsequent requests.
 3. **Session Binding Verification**: Ensures the JWT session correlates with an active, unrevoked DID in the Chain-1 Identity Registry.

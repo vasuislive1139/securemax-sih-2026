@@ -12,8 +12,8 @@ describe("Chain-1: Identity & Access Domain", function () {
   let user2: SignerWithAddress;
   let attacker: SignerWithAddress;
 
-  const DID1 = "did:securemesh:0x111";
-  const DID2 = "did:securemesh:0x222";
+  const DID1 = "did:securemax:0x111";
+  const DID2 = "did:securemax:0x222";
   const ASSET1 = ethers.id("asset1");
   const ASSET_CODE = "BEL-RDR-001";
   const CONTENT_HASH = ethers.id("content1");

@@ -11,13 +11,12 @@ import { UserRole } from '@/types';
 const useUser = () => ({ role: UserRole.ADMIN });
 
 const navItems = [
-  { name: 'Overview', href: '/dashboard/admin', icon: LayoutDashboard, roles: [UserRole.ADMIN] },
-  { name: 'My Access', href: '/dashboard/user', icon: User, roles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.ENGINEER, UserRole.AUDITOR] },
+  { name: 'SOC Dashboard', href: '/dashboard/soc', icon: LayoutDashboard, roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
+  { name: 'Sentinel Lab', href: '/security/sentinel', icon: Activity, roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
+  { name: 'Incident Center', href: '/security/incidents', icon: ShieldCheck, roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
+  { name: 'Audit Log', href: '/audit', icon: List, roles: [UserRole.ADMIN, UserRole.AUDITOR, UserRole.SECURITY_ANALYST] },
   { name: 'Digital Assets', href: '/assets', icon: HardDrive, roles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.ENGINEER] },
   { name: 'Access Requests', href: '/access', icon: Key, roles: [UserRole.ADMIN, UserRole.MANAGER, UserRole.ENGINEER] },
-  { name: 'Security Center', href: '/dashboard/security', icon: ShieldCheck, roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
-  { name: 'Audit Log', href: '/audit', icon: List, roles: [UserRole.ADMIN, UserRole.AUDITOR, UserRole.SECURITY_ANALYST] },
-  { name: 'Sentinel Sandbox', href: '/dashboard/security', icon: Activity, roles: [UserRole.ADMIN, UserRole.SECURITY_ANALYST] },
 ];
 
 interface SidebarProps {

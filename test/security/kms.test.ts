@@ -46,7 +46,7 @@ vi.mock('../../src/lib/audit/logger', () => ({
 
 describe('KMS & Temporary Authorization Security Tests', () => {
   const MASTER_KEY_HEX = '0000000000000000000000000000000000000000000000000000000000000000';
-  process.env.SECUREMESH_KMS_MASTER_KEY = MASTER_KEY_HEX;
+  process.env.SECUREMAX_KMS_MASTER_KEY = MASTER_KEY_HEX;
   process.env.JWT_SECRET = 'super-secret-test-key-must-be-long-enough';
   
   const VALID_USER_ID = 'user-123';

@@ -2,14 +2,17 @@ import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { List, Search, Filter, ShieldCheck, Download } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { supabaseClient } from '@/lib/db/client';
+import { supabaseAdmin } from '@/lib/db/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { getVerifiedSession } from '@/lib/auth/session';
 
 export default async function AuditorDashboardPage() {
-  const { data: logs } = await supabaseClient
+  await getVerifiedSession(); // Validate session exists
+
+  const { data: logs } = await supabaseAdmin
     .from('audit_events')
-    .select('*')
+    .select('*, users(display_name)')
     .order('created_at', { ascending: false })
     .limit(15);
 

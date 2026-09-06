@@ -1,3 +1,5 @@
+'use client';
+
 import * as React from 'react';
 import { Menu, LogOut, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -40,7 +42,15 @@ export function Navbar() {
           
           <div className="h-6 w-px bg-border mx-2"></div>
           
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-destructive">
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className="text-muted-foreground hover:text-destructive"
+            onClick={async () => {
+              await fetch('/api/auth/logout', { method: 'POST' });
+              window.location.href = '/login';
+            }}
+          >
             <LogOut className="h-4 w-4 mr-2" />
             Disconnect
           </Button>
