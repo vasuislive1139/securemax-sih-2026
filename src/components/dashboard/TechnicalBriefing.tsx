@@ -28,6 +28,7 @@ const SECTIONS = [
   { id: 'stack', title: '18. Technology Stack' },
   { id: 'roadmap', title: '19. Implemented vs Roadmap' },
   { id: 'why', title: '20. Why SecureMax?' },
+  { id: 'sih', title: '21. SIH26125 Coverage' },
 ];
 
 const BRIEFING_FLOW = [
@@ -169,6 +170,7 @@ function ContentRouter({ id, setActiveId }: { id: string, setActiveId: (id: stri
     case 'stack': return <StackSection />;
     case 'roadmap': return <RoadmapSection />;
     case 'why': return <WhySection />;
+    case 'sih': return <SihSection />;
     default: return <div>Section not found</div>;
   }
 }
@@ -921,3 +923,79 @@ const RoadmapItem = ({ name, status }: { name: string, status: string }) => {
   );
 };
 const FlowBlock = ({ label }: { label: string }) => <div className="px-4 py-2 bg-black/60 border border-white/10 rounded text-center text-xs text-white shadow-sm font-mono mb-2">{label}</div>;
+
+const SihSection = () => (
+  <div className="space-y-6">
+    <div className="flex items-center gap-3 mb-6">
+      <FileText className="w-8 h-8 text-primary" />
+      <div>
+        <h3 className="text-2xl font-bold font-mono text-white">SIH26125 REQUIREMENT COVERAGE</h3>
+        <p className="text-zinc-400">Alignment with official problem statement capabilities</p>
+      </div>
+    </div>
+    <div className="bg-black/50 border border-white/10 rounded-lg overflow-hidden">
+      <table className="w-full text-sm">
+        <thead className="bg-primary/10 border-b border-primary/20 text-primary">
+          <tr>
+            <th className="text-left p-4 font-mono">SIH REQUIREMENT</th>
+            <th className="text-left p-4 font-mono">SECUREMAX IMPLEMENTATION</th>
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-white/5 font-mono text-zinc-300">
+          <tr>
+            <td className="p-4">Cryptographic Identity</td>
+            <td className="p-4 text-emerald-400">Wallet challenge-response / cryptographic proof</td>
+          </tr>
+          <tr>
+            <td className="p-4">Identity & Access Control</td>
+            <td className="p-4 text-emerald-400">RBAC + contextual authorization</td>
+          </tr>
+          <tr>
+            <td className="p-4">Digital Asset Management</td>
+            <td className="p-4 text-emerald-400">Asset Registry / asset policy</td>
+          </tr>
+          <tr>
+            <td className="p-4">NFT Ownership</td>
+            <td className="p-4 text-amber-400">Digital Asset Registry — NFT-compatible architecture roadmap</td>
+          </tr>
+          <tr>
+            <td className="p-4">Smart Contracts</td>
+            <td className="p-4 text-emerald-400">Deployed Sepolia contracts</td>
+          </tr>
+          <tr>
+            <td className="p-4">Admin Governance</td>
+            <td className="p-4 text-emerald-400">Authorized admin contract functions</td>
+          </tr>
+          <tr>
+            <td className="p-4">Role-Based Access</td>
+            <td className="p-4 text-emerald-400">Admin / Manager / Auditor / User</td>
+          </tr>
+          <tr>
+            <td className="p-4">Permission Enforcement</td>
+            <td className="p-4 text-emerald-400">On-chain policy enforcement</td>
+          </tr>
+          <tr>
+            <td className="p-4">Auditability</td>
+            <td className="p-4 text-emerald-400">Application audit + blockchain anchoring</td>
+          </tr>
+          <tr>
+            <td className="p-4">Protected Data</td>
+            <td className="p-4 text-emerald-400">AES-256-GCM encrypted off-chain data</td>
+          </tr>
+          <tr>
+            <td className="p-4">Key Security</td>
+            <td className="p-4 text-emerald-400">Separate Key Policy + KMS authorization</td>
+          </tr>
+          <tr>
+            <td className="p-4">Threat Detection</td>
+            <td className="p-4 text-emerald-400">Sentinel deterministic validation</td>
+          </tr>
+          <tr>
+            <td className="p-4">Security Testing</td>
+            <td className="p-4 text-emerald-400">Controlled sandbox validation</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+);

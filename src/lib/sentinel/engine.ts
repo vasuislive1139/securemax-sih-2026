@@ -112,14 +112,14 @@ function createFinding(ctx: SecurityCheckContext, severity: SeverityLevel, compo
   };
 }
 
-// Array of all 15 deterministic checks (using a subset for the real functional code demonstration)
+// Array of all 5 deterministic checks (using a subset for the real functional code demonstration)
 const SECURITY_CHECKS = [
   checkUnauthorizedAccess,
   checkExpiredKey,
   checkRevokedPermission,
   checkPrivilegeEscalation,
   checkReplayAttempt
-  // In a full commercial run, all 15 mapped checks are registered here
+  // In a full commercial run, all 5 mapped checks are registered here
 ];
 
 export async function executeSentinelScan(triggeredBy: string): Promise<string> {

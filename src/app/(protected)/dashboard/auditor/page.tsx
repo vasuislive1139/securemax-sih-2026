@@ -21,7 +21,7 @@ export default async function AuditorDashboardPage() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
           <h2 className="text-3xl font-bold tracking-tight text-foreground">Audit Log</h2>
-          <p className="text-muted-foreground mt-1">Immutable, tamper-evident cryptographic event ledger.</p>
+          <p className="text-muted-foreground mt-1">Tamper-evident cryptographic event ledger. Selected security events can be blockchain-anchored for independent integrity verification.</p>
         </div>
         <div className="flex items-center gap-3 mt-4 sm:mt-0">
           <Button variant="outline" className="border-white/10 hover:bg-white/5">

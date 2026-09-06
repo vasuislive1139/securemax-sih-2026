@@ -31,8 +31,8 @@ type FabricNode = {
 
 // --- DATA ---
 const MAIN_FLOW: FabricNode[] = [
-  { id: 'identity', label: 'Identity / DID', icon: Fingerprint, domain: 'Domain 1', desc: 'Verifiable credentials mapped to connected Web3 wallet.' },
-  { id: 'rbac', label: 'RBAC / ABAC', icon: Layers, domain: 'Domain 1', desc: 'Context-aware role evaluation at the edge.' },
+  { id: 'identity', label: 'Cryptographic Identity', icon: Fingerprint, domain: 'Domain 1', desc: 'DID-ready wallet-backed authentication.' },
+  { id: 'rbac', label: 'RBAC + Context', icon: Layers, domain: 'Domain 1', desc: 'Context-aware role evaluation at the edge.' },
   { id: 'chain1', label: 'Domain 1 — Identity, RBAC & Asset Authorization', icon: Activity, domain: 'Domain 1', desc: 'Sepolia EVM: Anchors Identity and Asset metadata.' },
   { id: 'asset', label: 'Asset Security', icon: Database, domain: 'Domain 1', desc: 'Asset payload classification and mapping.' },
   { id: 'policy', label: 'Key Policy', icon: Shield, domain: 'Domain 2', desc: 'Cryptographic condition checks and expiration bounds.' },
@@ -249,7 +249,7 @@ export default function CyberCommandInterface() {
               <div className="text-center text-zinc-600 my-1">▼ SECOND GATE ▼</div>
               <div className="pl-2 border-l border-cyan-500/30 text-cyan-400/80">
                 <div>✓ Key Policy Verified</div>
-                <div>✓ KMS Cryptomaterial Injected</div>
+                <div>✓ KMS Authorization Verified</div>
               </div>
             </div>
           </div>
