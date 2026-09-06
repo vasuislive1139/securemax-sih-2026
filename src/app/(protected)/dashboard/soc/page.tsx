@@ -9,6 +9,7 @@ import { InfrastructureHealth } from '@/components/blockchain/InfrastructureHeal
 import { KMSHealth } from '@/components/security/KMSHealth';
 import { PresentationMode } from '@/components/dashboard/PresentationMode';
 import { AttackPathVisualization } from '@/components/security/AttackPathVisualization';
+import { SecurityEventTimeline } from '@/components/dashboard/SecurityEventTimeline';
 
 export default function SOCDashboard() {
   const { systemState, postureScore, incidents, activeThreat } = useDemoStore();
@@ -36,15 +37,18 @@ export default function SOCDashboard() {
 
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight text-foreground">Security Operations Center</h2>
-          <p className="text-muted-foreground mt-1">Bharat Electronics Secure Systems - Demonstration Environment</p>
+          <h2 className="text-3xl font-bold tracking-tight text-foreground uppercase">SECUREMAX</h2>
+          <p className="text-muted-foreground mt-1 font-mono text-sm tracking-widest uppercase">SECURITY OPERATIONS</p>
         </div>
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4 sm:mt-0">
-          <Badge variant="outline" className={`px-4 py-1.5 font-mono ${isHealthy ? 'border-emerald-500/50 text-emerald-400' : 'border-destructive/50 text-destructive'}`}>
-            SYSTEM STATE: {systemState}
-          </Badge>
           <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 px-4 py-1.5 font-mono">
-            ROLE: {sessionRole}
+            ETHEREUM SEPOLIA
+          </Badge>
+          <Badge variant="outline" className="border-cyan-500/50 text-cyan-400 px-4 py-1.5 font-mono uppercase">
+            {sessionRole}
+          </Badge>
+          <Badge variant="outline" className={`px-4 py-1.5 font-mono ${isHealthy ? 'border-emerald-500/50 text-emerald-400' : 'border-destructive/50 text-destructive'}`}>
+            ● {isHealthy ? 'OPERATIONAL' : 'EVENT DETECTED'}
           </Badge>
         </div>
       </div>
@@ -70,14 +74,21 @@ export default function SOCDashboard() {
         
         <Card className="bg-[#0a0a0c] border-zinc-800 rounded-lg  ">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 pt-4 px-4">
-            <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Open Incidents</CardTitle>
+            <CardTitle className="text-[10px] font-mono uppercase tracking-widest text-zinc-500">Active Incidents</CardTitle>
             <AlertTriangle className={`h-4 w-4 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-muted-foreground'}`} />
           </CardHeader>
           <CardContent className="px-4 pb-4">
             <div className={`text-2xl font-mono text-zinc-100 ${openIncidentsCount > 0 ? 'text-amber-500' : 'text-foreground'}`}>
               {openIncidentsCount}
             </div>
-            <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">{openIncidentsCount > 0 ? "Active Threats" : "No Active Threats"}</p>
+            {openIncidentsCount > 0 ? (
+              <div className="mt-1">
+                <p className="text-[10px] font-mono text-amber-500 tracking-widest uppercase">TOKEN REPLAY ATTEMPT</p>
+                <p className="text-[9px] font-mono text-zinc-500 tracking-widest uppercase mt-0.5">DETECTED · BLOCKED</p>
+              </div>
+            ) : (
+              <p className="text-[10px] font-mono text-zinc-500 mt-1 tracking-widest uppercase">No Active Incidents</p>
+            )}
           </CardContent>
         </Card>
 
@@ -136,6 +147,8 @@ export default function SOCDashboard() {
           </CardContent>
         </Card>
       )}
+
+      <SecurityEventTimeline />
     </div>
   );
 }

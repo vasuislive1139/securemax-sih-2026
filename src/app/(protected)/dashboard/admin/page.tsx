@@ -64,17 +64,17 @@ export default async function AdminDashboard() {
                </div>
                <div className="flex flex-col items-center gap-2">
                  <Users className="w-5 h-5 text-zinc-500" />
-                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">ACCESS</span>
-                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">ENFORCED</span>
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">RBAC</span>
+                 <span className="text-[10px] font-mono tracking-widest text-cyan-400">CONFIGURED</span>
                </div>
                <div className="flex flex-col items-center gap-2">
                  <Database className="w-5 h-5 text-zinc-500" />
-                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">ASSET SEC</span>
-                 <span className="text-[10px] font-mono tracking-widest text-emerald-500">GRANTED</span>
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">ASSET SECURITY</span>
+                 <span className="text-[10px] font-mono tracking-widest text-cyan-400">READY</span>
                </div>
                <div className="flex flex-col items-center gap-2">
                  <Key className="w-5 h-5 text-zinc-500" />
-                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">KEY SEC</span>
+                 <span className="text-[10px] font-mono tracking-widest text-zinc-500">KEY SECURITY</span>
                  <span className="text-[10px] font-mono tracking-widest text-cyan-400">PROTECTED</span>
                </div>
                <div className="flex flex-col items-center gap-2">

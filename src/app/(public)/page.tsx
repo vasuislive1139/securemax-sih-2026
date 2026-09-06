@@ -11,15 +11,15 @@ export default function CyberCommandInterface() {
 
   const isInit = presentationModeActive && presentationStage === 0;
   const getStatus = (baseText: string) => isInit ? "CONNECTING..." : baseText;
-  const getColor = () => isInit ? "text-amber-500 animate-pulse" : "text-emerald-500";
+  const getColor = () => isInit ? "text-amber-500 animate-pulse" : "text-cyan-400";
 
   // Simple event stream ticker for the demo video
   const events = [
-    { time: '10:14:18', type: 'AUTHENTICATION', message: 'Cryptographic identity verified', status: 'SUCCESS' },
-    { time: '10:14:21', type: 'AUTHORIZATION', message: 'RBAC context evaluation passed', status: 'SUCCESS' },
-    { time: '10:14:24', type: 'DOMAIN 1', message: 'Asset authorization granted', status: 'SUCCESS' },
-    { time: '10:14:28', type: 'DOMAIN 2', message: 'Decryption key policy evaluated', status: 'SUCCESS' },
-    { time: '10:14:32', type: 'KMS', message: 'Temporary decryption authorized', status: 'SUCCESS' }
+    { time: '10:14:18', type: 'SYSTEM', message: 'Security fabric initialized', status: 'OPERATIONAL' },
+    { time: '10:14:21', type: 'SENTINEL', message: 'Deterministic scan completed', status: 'CLEAR' },
+    { time: '10:14:24', type: 'DOMAIN 1', message: 'Asset policy sync verified', status: 'READY' },
+    { time: '10:14:28', type: 'DOMAIN 2', message: 'Key policy sync verified', status: 'READY' },
+    { time: '10:14:32', type: 'AUDIT', message: 'Chain integrity verified', status: 'VERIFIED' }
   ];
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export default function CyberCommandInterface() {
             SECURITY FABRIC: OPERATIONAL
           </div>
           <a href="/login" className="text-cyan-400 hover:text-cyan-300 border border-cyan-500/30 px-4 py-1.5 rounded-sm hover:bg-cyan-500/10 transition-colors">
-            ACCESS COMMAND CENTER
+            COMMAND CENTER
           </a>
         </div>
       </header>
@@ -74,7 +74,7 @@ export default function CyberCommandInterface() {
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">KMS</span>
-                <span className={`flex items-center gap-1 ${getColor().replace('emerald', 'cyan')}`}><Lock className="w-3 h-3"/> {isInit ? 'INITIALIZING...' : 'PROTECTED'}</span>
+                <span className={`flex items-center gap-1 ${getColor()}`}><Lock className="w-3 h-3"/> {isInit ? 'INITIALIZING...' : 'PROTECTED'}</span>
               </div>
               <div className="flex justify-between items-center pb-2 border-b border-zinc-800/50">
                 <span className="text-zinc-400">Sentinel</span>
@@ -103,7 +103,7 @@ export default function CyberCommandInterface() {
                     <div className="text-[10px] text-zinc-500">Cryptographic authentication</div>
                   </div>
                 </div>
-                <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('VERIFIED')}</div>
+                <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('READY')}</div>
               </div>
               
               <div className="w-px h-6 bg-zinc-800"></div>
@@ -116,7 +116,7 @@ export default function CyberCommandInterface() {
                     <div className="text-[10px] text-zinc-500">Role evaluation</div>
                   </div>
                 </div>
-                <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('ENFORCED')}</div>
+                <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('CONFIGURED')}</div>
               </div>
 
               <div className="w-px h-6 bg-zinc-800"></div>
@@ -132,7 +132,7 @@ export default function CyberCommandInterface() {
                       <div className="text-[10px] text-zinc-500">Asset authorization</div>
                     </div>
                   </div>
-                  <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('GRANTED')}</div>
+                  <div className={`text-[10px] font-mono ${getColor()}`}>● {getStatus('READY')}</div>
                 </div>
               </div>
 
@@ -156,7 +156,7 @@ export default function CyberCommandInterface() {
                       <div className="text-[10px] text-zinc-500">Decryption authorization</div>
                     </div>
                   </div>
-                  <div className="text-[10px] font-mono text-zinc-500">● PENDING</div>
+                  <div className="text-[10px] font-mono text-cyan-400">● READY</div>
                 </div>
               </div>
 
@@ -184,11 +184,12 @@ export default function CyberCommandInterface() {
             <div className="flex-1 overflow-y-auto space-y-3 font-mono text-[10px]">
               {events.slice(0, activeEvent + 1).reverse().map((ev, i) => (
                 <div key={i} className="pb-2 border-b border-zinc-800/50 last:border-0 animate-in fade-in slide-in-from-left-2">
-                  <div className="flex justify-between text-zinc-500 mb-1">
+                  <div className="flex justify-between items-start text-zinc-500 mb-1">
                     <span>{ev.time}</span>
-                    <span className="text-cyan-400">{ev.type}</span>
+                    <span className="text-emerald-500">{ev.status}</span>
                   </div>
-                  <div className="text-zinc-300">{ev.message}</div>
+                  <div className="text-zinc-300 uppercase">{ev.message}</div>
+                  <div className="text-cyan-400 mt-1">{ev.type}</div>
                 </div>
               ))}
             </div>
