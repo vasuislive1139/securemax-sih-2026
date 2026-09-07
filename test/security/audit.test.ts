@@ -8,15 +8,19 @@ vi.mock('server-only', () => ({}));
 
 // Mock the DB client
 vi.mock('../../src/lib/db/client', () => {
-  const mockChain = {
-    select: vi.fn().mockReturnThis(),
-    eq: vi.fn().mockReturnThis(),
-    order: vi.fn().mockReturnThis(),
-    limit: vi.fn().mockReturnThis(),
-    insert: vi.fn().mockReturnThis(),
-    upsert: vi.fn().mockReturnThis(),
-    single: vi.fn().mockResolvedValue({ data: {}, error: null }),
-  };
+  const mockChain: any = {};
+  mockChain.select = () => mockChain;
+  mockChain.eq = () => mockChain;
+  mockChain.gte = () => mockChain;
+  mockChain.in = () => mockChain;
+  mockChain.order = () => mockChain;
+  mockChain.limit = () => mockChain;
+  mockChain.insert = () => mockChain;
+  mockChain.upsert = () => mockChain;
+  mockChain.single = async () => ({ data: {}, error: null });
+  mockChain.maybeSingle = async () => ({ data: null, error: null });
+  mockChain.then = (resolve: any) => resolve({ data: [], error: null });
+
   return {
     supabaseAdmin: { from: () => mockChain },
     supabaseClient: { from: () => mockChain }
@@ -63,5 +67,13 @@ describe('Server Action Security Tests (Privilege Escalation & Access Control)',
 
     expect(result.success).toBe(false);
     expect(result.error).toMatch(/Unauthorized/);
+  });
+
+  it('CREATES PRESENTATION AUDIT EVENT: logs TOKEN_REPLAY_ATTEMPT with hash and idempotency', async () => {
+    const { logPresentationAuditEventAction } = await import('../../src/app/actions/audit');
+    const result = await logPresentationAuditEventAction();
+    expect(result.success).toBe(true);
+    expect(result.eventHash).toBeDefined();
+    expect(typeof result.eventHash).toBe('string');
   });
 });

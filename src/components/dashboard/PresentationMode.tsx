@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useDemoStore } from '@/stores/useDemoStore';
 import { Button } from '@/components/ui/button';
 import { Play, Square } from 'lucide-react';
+import { logPresentationAuditEventAction } from '@/app/actions/audit';
 
 const PHASES = [
   "INITIALIZATION",
@@ -38,6 +39,8 @@ export function PresentationMode() {
 
   // Registry for active scheduled timers to guarantee deterministic cleanup
   const timersRef = useRef<NodeJS.Timeout[]>([]);
+  // Safeguard: ensure exactly one audit event is logged per presentation run
+  const auditEventLoggedRef = useRef<boolean>(false);
 
   const clearAllTimers = useCallback(() => {
     timersRef.current.forEach((t) => clearTimeout(t));
@@ -65,6 +68,7 @@ export function PresentationMode() {
         console.log('[PRESENTATION] User stopped presentation mode');
       }
       clearAllTimers();
+      auditEventLoggedRef.current = false;
       resetDemo();
       safeNavigate('/dashboard/soc');
     } else {
@@ -72,6 +76,7 @@ export function PresentationMode() {
         console.log('[PRESENTATION] User started presentation mode from stage 0');
       }
       clearAllTimers();
+      auditEventLoggedRef.current = false;
       resetDemo();
       setPresentationMode(true);
       setPresentationStage(0);
@@ -165,6 +170,18 @@ export function PresentationMode() {
             affectedAsset: 'Asset-7A',
             source: '192.168.1.100 (SANDBOX)'
           });
+
+          // Record tamper-evident audit event for this presentation run
+          if (!auditEventLoggedRef.current) {
+            auditEventLoggedRef.current = true;
+            logPresentationAuditEventAction().then((res) => {
+              if (process.env.NODE_ENV === 'development') {
+                console.log('[PRESENTATION] Audit event logged to database:', res);
+              }
+            }).catch((err) => {
+              console.error('[PRESENTATION] Failed to record presentation audit event:', err);
+            });
+          }
         }, 6000);
 
         // Transition to next stage
@@ -192,6 +209,7 @@ export function PresentationMode() {
       }
 
       case 6: { // Phase 7: AUDIT
+        router.refresh();
         safeNavigate('/audit');
         addTimer(() => {
           setPresentationStage(7);
@@ -233,7 +251,8 @@ export function PresentationMode() {
     createIncident,
     resolvePresentationIncidents,
     setPostureScore,
-    setPresentationStage
+    setPresentationStage,
+    router
   ]);
 
   return (
