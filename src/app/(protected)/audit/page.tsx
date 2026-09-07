@@ -3,6 +3,7 @@ import { Database, ShieldCheck, FileText, ChevronDown } from 'lucide-react';
 import { supabaseAdmin } from '@/lib/db/client';
 
 export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export default async function AuditTrailPage() {
   const { data: auditEvents, error } = await supabaseAdmin

@@ -157,7 +157,7 @@ export function PresentationMode() {
           setPostureScore(72);
         }, 4800);
 
-        addTimer(() => {
+        addTimer(async () => {
           advanceAttackPath('BLOCKED');
           setPostureScore(65);
           createIncident({
@@ -171,16 +171,17 @@ export function PresentationMode() {
             source: '192.168.1.100 (SANDBOX)'
           });
 
-          // Record tamper-evident audit event for this presentation run
+          // Explicitly await audit event persistence in database
           if (!auditEventLoggedRef.current) {
             auditEventLoggedRef.current = true;
-            logPresentationAuditEventAction().then((res) => {
+            try {
+              const res = await logPresentationAuditEventAction();
               if (process.env.NODE_ENV === 'development') {
-                console.log('[PRESENTATION] Audit event logged to database:', res);
+                console.log('[PRESENTATION] Audit event persisted to database:', res);
               }
-            }).catch((err) => {
+            } catch (err) {
               console.error('[PRESENTATION] Failed to record presentation audit event:', err);
-            });
+            }
           }
         }, 6000);
 
@@ -209,11 +210,23 @@ export function PresentationMode() {
       }
 
       case 6: { // Phase 7: AUDIT
-        router.refresh();
-        safeNavigate('/audit');
+        (async () => {
+          // Pre-condition: Guarantee that the audit event is persisted before navigating to /audit
+          if (!auditEventLoggedRef.current) {
+            auditEventLoggedRef.current = true;
+            try {
+              await logPresentationAuditEventAction();
+            } catch (err) {
+              console.error('[PRESENTATION] Error ensuring audit event persistence:', err);
+            }
+          }
+          safeNavigate('/audit');
+          router.refresh();
+        })();
+
         addTimer(() => {
           setPresentationStage(7);
-        }, 6000);
+        }, 7000);
         break;
       }
 

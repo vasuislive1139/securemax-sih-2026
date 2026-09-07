@@ -3,6 +3,7 @@
 import { logAuditEvent } from '@/lib/audit/logger';
 import { supabaseAdmin } from '@/lib/db/client';
 import { AuditEventType } from '@/types';
+import { revalidatePath } from 'next/cache';
 
 export async function logPresentationAuditEventAction() {
   try {
@@ -50,6 +51,13 @@ export async function logPresentationAuditEventAction() {
         verification: 'PASSED'
       }
     });
+
+    // 3. Purge Next.js route cache for /audit so the fresh record is loaded immediately
+    try {
+      revalidatePath('/audit');
+    } catch {
+      // revalidatePath is active only in Next.js request context
+    }
 
     return {
       success: true,
