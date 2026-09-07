@@ -259,17 +259,17 @@ export function PresentationMode() {
     <>
       {/* Top Presentation HUD Banner */}
       {presentationModeActive && (
-        <div className="fixed top-0 left-0 right-0 z-50 bg-[#0a0a0c]/95 backdrop-blur-sm border-b border-zinc-800">
-          <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <span className={`flex h-2.5 w-2.5 rounded-full ${presentationStage === 8 ? 'bg-emerald-400' : 'bg-cyan-400 animate-pulse'}`}></span>
+        <div className="sticky top-0 z-50 w-full bg-[#0a0a0c] border-b border-zinc-800 shrink-0">
+          <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <span className={`flex h-2 w-2 rounded-full ${presentationStage === 8 ? 'bg-emerald-400' : 'bg-cyan-400 animate-pulse'}`}></span>
               <span className="font-mono font-bold tracking-widest text-zinc-100 text-xs sm:text-sm">PRESENTATION MODE</span>
             </div>
             <div className="flex items-center gap-4 overflow-hidden">
               <span className="font-mono text-[10px] sm:text-xs text-zinc-500 hidden sm:inline">
                 PHASE {Math.min(presentationStage + 1, 8)} / {PHASES.length}
               </span>
-              <div className={`flex items-center font-mono text-[10px] sm:text-xs px-3 py-1.5 rounded-sm border whitespace-nowrap truncate max-w-[220px] sm:max-w-none ${
+              <div className={`flex items-center font-mono text-[10px] sm:text-xs px-3 py-1 rounded-sm border whitespace-nowrap truncate max-w-[220px] sm:max-w-none ${
                 presentationStage === 8 
                   ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' 
                   : 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
